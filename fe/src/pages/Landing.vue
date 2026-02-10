@@ -33,7 +33,7 @@ function goToMain() {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #fafafa;
+  background: var(--color-bg);
 }
 
 .topbar {
@@ -41,14 +41,14 @@ function goToMain() {
   top: 0;
   left: 0;
   right: 0;
-  height: 56px;
+  height: var(--topbar-height);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24px;
+  padding: 0 var(--spacing-xl);
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(8px);
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--color-border);
   z-index: 100;
 }
 
@@ -59,26 +59,26 @@ function goToMain() {
 .topbar-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--spacing-md);
 }
 
 .sign-in-btn {
   height: 32px;
-  padding: 0 16px;
+  padding: 0 var(--spacing-lg);
   border: none;
-  border-radius: 6px;
-  background: #2563eb;
+  border-radius: var(--radius);
+  background: var(--color-primary);
   color: #fff;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
   transition:
-    background-color 0.15s,
-    box-shadow 0.15s;
+    background-color var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
 .sign-in-btn:hover {
-  background: #1d4ed8;
+  background: var(--color-primary-hover);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
@@ -88,7 +88,7 @@ function goToMain() {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 56px 24px 0;
+  padding: var(--topbar-height) var(--spacing-xl) 0;
   text-align: center;
 }
 
@@ -96,14 +96,14 @@ function goToMain() {
   margin: 0;
   font-size: 56px;
   font-weight: 700;
-  color: #111827;
+  color: var(--color-text-strong);
   letter-spacing: -1px;
 }
 
 .hero-subtitle {
-  margin: 12px 0 0;
+  margin: var(--spacing-md) 0 0;
   font-size: 20px;
   font-weight: 400;
-  color: #6b7280;
+  color: var(--color-text-muted);
 }
 </style>

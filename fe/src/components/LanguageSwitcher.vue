@@ -18,22 +18,22 @@ const appStore = useAppStore()
   justify-content: center;
   min-width: 40px;
   height: 32px;
-  padding: 0 8px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
+  padding: 0 var(--spacing-sm);
+  border: 1px solid var(--color-border-input);
+  border-radius: var(--radius);
   background: transparent;
-  color: #374151;
+  color: var(--color-text-subtle);
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.5px;
   cursor: pointer;
   transition:
-    background-color 0.15s,
-    border-color 0.15s;
+    background-color var(--transition-fast),
+    border-color var(--transition-fast);
 }
 
 .language-switcher:hover {
-  background-color: #f3f4f6;
-  border-color: #9ca3af;
+  background-color: var(--color-bg-hover);
+  border-color: var(--color-border-hover);
 }
 </style>

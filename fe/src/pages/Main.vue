@@ -48,26 +48,26 @@ const appStore = useAppStore()
 }
 
 .sidebar {
-  width: 240px;
-  background: #fff;
-  border-right: 1px solid #e5e7eb;
+  width: var(--sidebar-width);
+  background: var(--color-bg-surface);
+  border-right: 1px solid var(--color-border);
   display: flex;
   flex-direction: column;
-  transition: width 0.25s ease;
+  transition: width var(--transition-normal);
   overflow: hidden;
   flex-shrink: 0;
 }
 
 .sidebar.collapsed {
-  width: 48px;
+  width: var(--sidebar-width-collapsed);
 }
 
 .sidebar-header {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  height: 48px;
-  padding: 0 12px;
+  height: var(--sidebar-width-collapsed);
+  padding: 0 var(--spacing-md);
   flex-shrink: 0;
 }
 
@@ -83,22 +83,22 @@ const appStore = useAppStore()
   width: 32px;
   height: 32px;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius);
   background: transparent;
-  color: #6b7280;
+  color: var(--color-text-muted);
   cursor: pointer;
   transition:
-    background-color 0.15s,
-    color 0.15s;
+    background-color var(--transition-fast),
+    color var(--transition-fast);
 }
 
 .sidebar-toggle:hover {
-  background: #f3f4f6;
-  color: #374151;
+  background: var(--color-bg-hover);
+  color: var(--color-text-subtle);
 }
 
 .toggle-icon {
-  transition: transform 0.25s ease;
+  transition: transform var(--transition-normal);
 }
 
 .toggle-icon.rotated {
@@ -107,15 +107,15 @@ const appStore = useAppStore()
 
 .sidebar-nav {
   flex: 1;
-  padding: 8px;
+  padding: var(--spacing-sm);
 }
 
 .sidebar.collapsed .sidebar-nav {
-  padding: 8px 4px;
+  padding: var(--spacing-sm) var(--spacing-xs);
 }
 
 .main-content {
   flex: 1;
-  background: #fafafa;
+  background: var(--color-bg);
 }
 </style>

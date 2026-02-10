@@ -5,6 +5,8 @@
 </template>
 
 <style>
+@import '@/assets/variables.css';
+
 *,
 *::before,
 *::after {
@@ -14,17 +16,10 @@
 }
 
 body {
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
+  font-family: var(--font-family);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #1f2937;
-  background: #fafafa;
+  color: var(--color-text);
+  background: var(--color-bg);
 }
 </style>
