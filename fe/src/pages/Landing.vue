@@ -1,13 +1,56 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
+import AuthDialog from '@/components/AuthDialog.vue'
+import SignInForm from '@/components/SignInForm.vue'
+import RegisterForm from '@/components/RegisterForm.vue'
+import VerifyEmailForm from '@/components/VerifyEmailForm.vue'
+import { useAuthStore } from '@/stores/auth'
+import { useToast } from '@/composables/useToast'
 
 const router = useRouter()
 const { t } = useI18n()
+const authStore = useAuthStore()
+const toast = useToast()
 
-function goToMain() {
+const dialogOpen = ref(false)
+const authView = ref<'sign-in' | 'register' | 'verify'>('sign-in')
+const verifyEmail = ref('')
+
+function openSignIn() {
+  authView.value = 'sign-in'
+  dialogOpen.value = true
+}
+
+function onLoginSuccess() {
+  dialogOpen.value = false
   router.push({ name: 'main' })
+}
+
+function onRegisterSuccess(email: string) {
+  verifyEmail.value = email
+  authView.value = 'verify'
+}
+
+async function onGoVerify(email: string) {
+  verifyEmail.value = email
+  authView.value = 'verify'
+  try {
+    await authStore.resendVerification(email)
+    toast.info(t('auth.codeSentTo', { email }))
+  } catch {
+    toast.error(t('auth.resendFailed'))
+  }
+}
+
+function onVerifySuccess() {
+  authView.value = 'sign-in'
+}
+
+function handleLogout() {
+  authStore.logout()
 }
 </script>
 
@@ -17,7 +60,11 @@ function goToMain() {
       <div class="topbar-left" />
       <div class="topbar-right">
         <LanguageSwitcher />
-        <button class="sign-in-btn" @click="goToMain">{{ t('landing.signIn') }}</button>
+        <template v-if="authStore.isAuthenticated">
+          <span class="user-name">{{ authStore.user?.username }}</span>
+          <button class="sign-in-btn" @click="handleLogout">{{ t('landing.logout') }}</button>
+        </template>
+        <button v-else class="sign-in-btn" @click="openSignIn">{{ t('landing.signIn') }}</button>
       </div>
     </header>
 
@@ -25,6 +72,25 @@ function goToMain() {
       <h1 class="hero-title">{{ t('landing.title') }}</h1>
       <p class="hero-subtitle">{{ t('landing.subtitle') }}</p>
     </main>
+
+    <AuthDialog :open="dialogOpen" @close="dialogOpen = false">
+      <SignInForm
+        v-if="authView === 'sign-in'"
+        @success="onLoginSuccess"
+        @go-register="authView = 'register'"
+        @go-verify="onGoVerify"
+      />
+      <RegisterForm
+        v-else-if="authView === 'register'"
+        @success="onRegisterSuccess"
+        @go-sign-in="authView = 'sign-in'"
+      />
+      <VerifyEmailForm
+        v-else-if="authView === 'verify'"
+        :email="verifyEmail"
+        @success="onVerifySuccess"
+      />
+    </AuthDialog>
   </div>
 </template>
 
@@ -60,6 +126,12 @@ function goToMain() {
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-subtle);
 }
 
 .sign-in-btn {

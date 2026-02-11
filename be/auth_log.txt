@@ -1,0 +1,4 @@
+Registering user unverified1 with email unverified1@test.com
+Verification code sent to unverified1@test.com: 778683
+Registering user unverified2 with email unv2@test.com
+Verifying email averoo@gmail.com with code 323322

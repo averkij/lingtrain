@@ -14,6 +14,11 @@
   --color-bg-surface: #fff;
   --color-bg-hover: #f3f4f6;
 
+  /* Colors — semantic */
+  --color-error: #dc2626;
+  --color-success: #16a34a;
+  --color-info: #2563eb;
+
   /* Colors — borders */
   --color-border: #e5e7eb;
   --color-border-input: #d1d5db;
