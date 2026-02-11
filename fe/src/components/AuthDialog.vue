@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+
 defineProps<{
   open: boolean
 }>()
@@ -7,17 +9,24 @@ const emit = defineEmits<{
   close: []
 }>()
 
-function onOverlayClick(e: MouseEvent) {
-  if (e.target === e.currentTarget) {
+const mouseDownOnOverlay = ref(false)
+
+function onOverlayMouseDown(e: MouseEvent) {
+  mouseDownOnOverlay.value = e.target === e.currentTarget
+}
+
+function onOverlayMouseUp(e: MouseEvent) {
+  if (mouseDownOnOverlay.value && e.target === e.currentTarget) {
     emit('close')
   }
+  mouseDownOnOverlay.value = false
 }
 </script>
 
 <template>
   <Teleport to="body">
     <Transition name="dialog">
-      <div v-if="open" class="dialog-overlay" @click="onOverlayClick">
+      <div v-if="open" class="dialog-overlay" @mousedown="onOverlayMouseDown" @mouseup="onOverlayMouseUp">
         <div class="dialog-card">
           <button class="dialog-close" @click="emit('close')">&times;</button>
           <slot />
