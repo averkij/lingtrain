@@ -17,6 +17,9 @@ class UserOut(BaseModel):
     username: str
     email: str
     role: str
+    auth_provider: str
+    display_name: str | None = None
+    avatar_url: str | None = None
     is_active: bool
     is_email_verified: bool
 

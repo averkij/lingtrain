@@ -12,8 +12,12 @@ class User(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     username: Mapped[str] = mapped_column(String(50), unique=True, index=True)
     email: Mapped[str] = mapped_column(String(255), unique=True, index=True)
-    password_hash: Mapped[str] = mapped_column(String(255))
+    password_hash: Mapped[str | None] = mapped_column(String(255), nullable=True, default=None)
     role: Mapped[str] = mapped_column(String(20), default="user")
+    auth_provider: Mapped[str] = mapped_column(String(20), default="local")
+    provider_id: Mapped[str | None] = mapped_column(String(255), nullable=True, default=None)
+    display_name: Mapped[str | None] = mapped_column(String(100), nullable=True, default=None)
+    avatar_url: Mapped[str | None] = mapped_column(String(500), nullable=True, default=None)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
     is_email_verified: Mapped[bool] = mapped_column(Boolean, default=False)
     created_at: Mapped[datetime] = mapped_column(

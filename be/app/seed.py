@@ -11,12 +11,23 @@ def add_test_users(db: Session) -> None:
             "email": "admin@lingtrain.local",
             "password": "adminadmin777",
             "role": "admin",
+            "display_name": "Admin User",
         },
         {
             "username": "test",
             "email": "test@lingtrain.local",
             "password": "testtest777",
             "role": "user",
+            "display_name": "Test User",
+        },
+        {
+            "username": "googleuser",
+            "email": "googleuser@gmail.com",
+            "password": None,
+            "role": "user",
+            "auth_provider": "google",
+            "provider_id": "google_117000000000000000001",
+            "display_name": "Google User",
         },
     ]
 
@@ -27,8 +38,11 @@ def add_test_users(db: Session) -> None:
         user = User(
             username=data["username"],
             email=data["email"],
-            password_hash=hash_password(data["password"]),
+            password_hash=hash_password(data["password"]) if data["password"] else None,
             role=data["role"],
+            auth_provider=data.get("auth_provider", "local"),
+            provider_id=data.get("provider_id"),
+            display_name=data.get("display_name"),
             is_active=True,
             is_email_verified=True,
         )

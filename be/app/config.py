@@ -7,6 +7,6 @@ SECRET_KEY = os.environ.get(
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_DAYS = 30
 
-DATABASE_URL = os.environ.get("LINGTRAIN_DATABASE_URL", "sqlite:///./lingtrain.db")
+DATABASE_URL = os.environ.get("LINGTRAIN_DATABASE_URL", "sqlite:///./lingtrain2.db")
 
 VERIFICATION_CODE_EXPIRE_MINUTES = 15

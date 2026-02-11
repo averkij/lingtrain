@@ -113,6 +113,6 @@ def authenticate_user(db: Session, login: str, password: str) -> User | None:
     user = db.query(User).filter(
         (User.email == login.lower()) | (User.username == login)
     ).first()
-    if not user or not verify_password(password, user.password_hash):
+    if not user or not user.password_hash or not verify_password(password, user.password_hash):
         return None
     return user
