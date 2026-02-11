@@ -33,6 +33,10 @@ router.beforeEach(async (to) => {
     await authStore.fetchUser()
   }
 
+  if (to.name === 'landing' && authStore.isAuthenticated) {
+    return { name: 'main' }
+  }
+
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     return { name: 'landing' }
   }

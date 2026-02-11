@@ -165,7 +165,7 @@ function handleLogout() {
 }
 
 .hero-title {
-  margin: 0;
+  margin: -100px 0 0 0;
   font-size: 56px;
   font-weight: 700;
   color: var(--color-text-strong);

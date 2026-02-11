@@ -22,6 +22,9 @@ const messages = {
     },
     sidebar: {
       collapse: 'Collapse',
+      settings: 'Settings',
+      help: 'Help',
+      logOut: 'Log out',
     },
     auth: {
       signIn: 'Sign in',
@@ -75,6 +78,9 @@ const messages = {
     },
     sidebar: {
       collapse: 'Свернуть',
+      settings: 'Настройки',
+      help: 'Помощь',
+      logOut: 'Выйти',
     },
     auth: {
       signIn: 'Войти',
