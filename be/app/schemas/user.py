@@ -1,10 +1,19 @@
-from pydantic import BaseModel, EmailStr
+import re
+
+from pydantic import BaseModel, EmailStr, field_validator
 
 
 class UserCreate(BaseModel):
     username: str
     email: EmailStr
     password: str
+
+    @field_validator("username")
+    @classmethod
+    def username_must_be_latin(cls, v: str) -> str:
+        if not re.fullmatch(r"[a-zA-Z0-9_-]+", v):
+            raise ValueError("Username must contain only latin letters, digits, hyphens, or underscores")
+        return v
 
 
 class UserLogin(BaseModel):

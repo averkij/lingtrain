@@ -20,9 +20,12 @@ const password = ref('')
 const confirmPassword = ref('')
 const loading = ref(false)
 
+const usernameValid = computed(() => /^[a-zA-Z0-9_-]*$/.test(username.value))
+
 const canSubmit = computed(
   () =>
     username.value.length > 0 &&
+    usernameValid.value &&
     email.value.length > 0 &&
     password.value.length >= 6 &&
     confirmPassword.value.length > 0 &&
@@ -58,6 +61,7 @@ async function handleSubmit() {
     <form @submit.prevent="handleSubmit">
       <label class="field-label">{{ t('auth.username') }}</label>
       <input v-model="username" type="text" class="field-input" autocomplete="username" />
+      <span v-if="username.length > 0 && !usernameValid" class="field-error">{{ t('auth.usernameLatin') }}</span>
 
       <label class="field-label">{{ t('auth.email') }}</label>
       <input v-model="email" type="email" class="field-input" autocomplete="email" />
