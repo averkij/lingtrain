@@ -40,10 +40,6 @@ def generate_verification_code() -> str:
 
 
 def register_user(db: Session, username: str, email: str, password: str) -> User:
-    logger.info(f"Registering user {username} with email {email}")
-    with open("auth_log.txt", "a") as f:
-        f.write(f"Registering user {username} with email {email}\n")
-
     user = User(
         username=username,
         email=email.lower(),

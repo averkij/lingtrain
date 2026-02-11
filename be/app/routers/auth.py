@@ -35,11 +35,6 @@ def register(data: UserCreate, db: Session = Depends(get_db)):
 
 @router.post("/verify-email")
 def verify(data: VerifyEmailRequest, db: Session = Depends(get_db)):
-    print(f"Verifying email {data.email} with code {data.code}")
-    logger.info(f"Verifying email {data.email} with code {data.code}")
-    with open("auth_log.txt", "a") as f:
-        f.write(f"Verifying email {data.email} with code {data.code}\n")
-
     if not verify_email(db, data.email, data.code):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid or expired code")
     return {"message": "Email verified"}
