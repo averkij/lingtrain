@@ -1,7 +1,10 @@
 import uvicorn
 import logging
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(name)s] %(levelname)s: %(message)s")
+from app.logging_config import setup_logging, archive_old_logs
+
+setup_logging()
+archive_old_logs()
 logger = logging.getLogger(__name__)
 
 if __name__ == "__main__":
