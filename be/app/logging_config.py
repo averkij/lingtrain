@@ -36,7 +36,6 @@ def setup_logging():
                     "interval": 1,
                     "backupCount": 0,
                     "encoding": "utf-8",
-                    "suffix": "%Y-%m-%d",
                 },
             },
             "loggers": {
