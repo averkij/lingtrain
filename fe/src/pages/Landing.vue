@@ -26,7 +26,7 @@ function openSignIn() {
 
 function onLoginSuccess() {
   dialogOpen.value = false
-  router.push({ name: 'main' })
+  router.push({ name: 'aligner-documents' })
 }
 
 function onRegisterSuccess(email: string) {

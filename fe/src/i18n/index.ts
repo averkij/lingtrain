@@ -22,9 +22,16 @@ const messages = {
     },
     sidebar: {
       collapse: 'Collapse',
+      aligner: 'Aligner',
       settings: 'Settings',
       help: 'Help',
       logOut: 'Log out',
+    },
+    aligner: {
+      title: 'Aligner',
+      documents: 'Documents',
+      alignments: 'Alignments',
+      create: 'Create',
     },
     auth: {
       signIn: 'Sign in',
@@ -78,9 +85,16 @@ const messages = {
     },
     sidebar: {
       collapse: 'Свернуть',
+      aligner: 'Выравниватель',
       settings: 'Настройки',
       help: 'Помощь',
       logOut: 'Выйти',
+    },
+    aligner: {
+      title: 'Выравниватель',
+      documents: 'Тексты',
+      alignments: 'Выравнивания',
+      create: 'Экспорт',
     },
     auth: {
       signIn: 'Войти',

@@ -1,14 +1,17 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, computed } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
+const route = useRoute()
 const { t } = useI18n()
 const appStore = useAppStore()
 const authStore = useAuthStore()
+
+const alignerActive = computed(() => route.path.startsWith('/aligner'))
 
 const menuOpen = ref(false)
 const menuPosition = ref({ left: '0px', bottom: '0px' })
@@ -64,7 +67,19 @@ function handleLogout() {
           </svg>
         </button>
       </div>
-      <nav class="sidebar-nav" />
+      <nav class="sidebar-nav">
+        <RouterLink
+          :to="{ name: 'aligner-documents' }"
+          class="nav-item"
+          :class="{ 'nav-item--active': alignerActive }"
+        >
+          <svg class="nav-icon" width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 2L28.124 9V23L16 30L3.876 23V9L16 2Z" fill="#dc2626" />
+            <text x="16" y="21" text-anchor="middle" fill="white" font-size="15" font-weight="600" font-family="sans-serif">A</text>
+          </svg>
+          <span class="nav-label">{{ t('sidebar.aligner') }}</span>
+        </RouterLink>
+      </nav>
 
       <!-- User section -->
       <div class="sidebar-user">
@@ -114,7 +129,9 @@ function handleLogout() {
       </Transition>
     </Teleport>
 
-    <div class="main-content" />
+    <div class="main-content">
+      <RouterView />
+    </div>
   </div>
 </template>
 
@@ -188,12 +205,49 @@ function handleLogout() {
 }
 
 .sidebar.collapsed .sidebar-nav {
-  padding: var(--spacing-sm) var(--spacing-xs);
+  padding: var(--spacing-sm);
 }
 
 .main-content {
   flex: 1;
   background: var(--color-bg);
+  overflow-y: auto;
+}
+
+/* Nav items */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xs);
+  border: none;
+  border-radius: var(--radius);
+  background: transparent;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  overflow: hidden;
+}
+
+.nav-item:hover {
+  background: var(--color-bg-hover);
+}
+
+.nav-item--active {
+  background: var(--color-bg-hover);
+}
+
+.nav-icon {
+  flex-shrink: 0;
+}
+
+.nav-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-subtle);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* User section */
