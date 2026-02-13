@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 
 from sqlalchemy import String, Boolean, DateTime
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
 
@@ -28,3 +28,10 @@ class User(Base):
         default=lambda: datetime.now(timezone.utc),
         onupdate=lambda: datetime.now(timezone.utc),
     )
+
+    documents: Mapped[list["Document"]] = relationship(back_populates="user")
+    alignments: Mapped[list["Alignment"]] = relationship(back_populates="user")
+
+
+from app.models.document import Document  # noqa: E402, F811
+from app.models.alignment import Alignment  # noqa: E402, F811
