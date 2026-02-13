@@ -142,7 +142,11 @@ function handleLogout() {
 }
 
 .sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: var(--sidebar-width);
+  height: 100vh;
   background: var(--color-bg-surface);
   border-right: 1px solid var(--color-border);
   display: flex;
@@ -150,10 +154,15 @@ function handleLogout() {
   transition: width var(--transition-normal);
   overflow: hidden;
   flex-shrink: 0;
+  z-index: 100;
 }
 
 .sidebar.collapsed {
   width: var(--sidebar-width-collapsed);
+}
+
+.sidebar.collapsed ~ .main-content {
+  margin-left: var(--sidebar-width-collapsed);
 }
 
 .sidebar-header {
@@ -210,8 +219,10 @@ function handleLogout() {
 
 .main-content {
   flex: 1;
+  margin-left: var(--sidebar-width);
   background: var(--color-bg);
   overflow-y: auto;
+  transition: margin-left var(--transition-normal);
 }
 
 /* Nav items */
