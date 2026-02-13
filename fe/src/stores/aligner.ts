@@ -19,6 +19,7 @@ import {
   type AlignmentCreate,
   type AlignStartParams,
   type AlignNextParams,
+  type AlignmentStateValue,
   type ResolveConflictsParams,
 } from '@/api/alignments'
 
@@ -71,11 +72,19 @@ export const useAlignerStore = defineStore('aligner', () => {
   }
 
   async function startAlignment(guid: string, data: AlignStartParams) {
+    // Optimistic update: show IN_PROGRESS immediately so the UI disables buttons
+    if (selectedAlignment.value) {
+      selectedAlignment.value = { ...selectedAlignment.value, state: 1 as AlignmentStateValue }
+    }
     await apiStartAlignment(guid, data)
     startPolling(guid)
   }
 
   async function alignNext(guid: string, data: AlignNextParams) {
+    // Optimistic update: show IN_PROGRESS immediately so the UI disables buttons
+    if (selectedAlignment.value) {
+      selectedAlignment.value = { ...selectedAlignment.value, state: 1 as AlignmentStateValue }
+    }
     await apiAlignNext(guid, data)
     startPolling(guid)
   }

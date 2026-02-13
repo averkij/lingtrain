@@ -134,9 +134,13 @@ export function getConflictDetail(guid: string, id: number) {
 }
 
 export function updateVisualization(guid: string, data: VisualizationParams) {
-  return apiFetch<void>(`/api/aligner/alignments/${guid}/visualize`, {
+  const params = new URLSearchParams()
+  if (data.batch_ids) {
+    for (const id of data.batch_ids) params.append('batch_ids', String(id))
+  }
+  if (data.update_all) params.set('update_all', 'true')
+  return apiFetch<void>(`/api/aligner/alignments/${guid}/visualize?${params}`, {
     method: 'POST',
-    body: JSON.stringify(data),
   })
 }
 

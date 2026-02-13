@@ -49,6 +49,9 @@ export const useEditorStore = defineStore('editor', () => {
       processing.value = res.items
       currentPage.value = res.meta.page
       totalPages.value = res.meta.total_pages
+    } catch (e) {
+      // Keep existing items visible on error
+      throw e
     } finally {
       loading.value = false
     }

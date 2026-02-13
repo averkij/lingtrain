@@ -2,12 +2,14 @@
 import { ref, onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useEditorStore } from '@/stores/editor'
+import { useAlignerStore } from '@/stores/aligner'
 import EditItem from './EditItem.vue'
 import Pagination from './Pagination.vue'
 import GoToPageDialog from './GoToPageDialog.vue'
 
 const { t } = useI18n()
 const editor = useEditorStore()
+const aligner = useAlignerStore()
 
 const props = defineProps<{
   guid: string
@@ -30,6 +32,16 @@ watch(
   () => {
     editor.fetchMeta(props.guid)
     loadPage(1)
+  },
+)
+
+// Auto-refresh page count when alignment progress changes (e.g. new batches aligned)
+watch(
+  () => aligner.selectedAlignment?.curr_batches,
+  () => {
+    editor.fetchMeta(props.guid)
+    // Refresh current page to pick up any changes
+    editor.fetchProcessingPage(props.guid, pageSize, editor.currentPage)
   },
 )
 
@@ -57,19 +69,19 @@ function handleGoToPage(page: number) {
       @page-change="loadPage"
     />
 
-    <div v-if="editor.loading" class="alignment-editor__loading">
-      <span class="alignment-editor__spinner" />
-      {{ t('aligner.loading') }}
-    </div>
-
-    <div v-else class="alignment-editor__items">
-      <EditItem
-        v-for="item in editor.processing"
-        :key="item.id"
-        :item="item"
-        :guid="guid"
-        :page-size="pageSize"
-      />
+    <div class="alignment-editor__content" :class="{ 'alignment-editor__content--loading': editor.loading }">
+      <div v-if="editor.loading" class="alignment-editor__overlay">
+        <span class="alignment-editor__spinner" />
+      </div>
+      <div class="alignment-editor__items">
+        <EditItem
+          v-for="item in editor.processing"
+          :key="item.index_id"
+          :item="item"
+          :guid="guid"
+          :page-size="pageSize"
+        />
+      </div>
     </div>
 
     <Pagination
@@ -128,19 +140,29 @@ function handleGoToPage(page: number) {
   border-color: var(--color-border-hover);
 }
 
-.alignment-editor__loading {
+.alignment-editor__content {
+  position: relative;
+  min-height: 100px;
+}
+
+.alignment-editor__content--loading .alignment-editor__items {
+  opacity: 0.4;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.alignment-editor__overlay {
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-sm);
-  font-size: 13px;
-  color: var(--color-text-muted);
-  padding: var(--spacing-2xl);
+  z-index: 1;
 }
 
 .alignment-editor__spinner {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   border: 2px solid var(--color-border);
   border-top-color: var(--color-primary);
   border-radius: 50%;
@@ -155,5 +177,6 @@ function handleGoToPage(page: number) {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
+  transition: opacity 0.15s ease;
 }
 </style>

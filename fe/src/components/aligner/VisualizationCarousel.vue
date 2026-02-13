@@ -11,38 +11,53 @@ const props = defineProps<{
   userId: number
 }>()
 
-const currentBatch = ref(0)
+const PAGE_SIZE = 5
+const pageStart = ref(0)
+const refreshKey = ref(0)
+const loading = ref(false)
 
 const hasImages = computed(() => props.totalBatches > 0)
 
-const imageUrl = computed(() => {
-  if (!hasImages.value) return ''
-  return `/static/img/${props.userId}/${props.guid}.best_${currentBatch.value}.png?t=${Date.now()}`
+const visibleBatches = computed(() => {
+  const end = Math.min(pageStart.value + PAGE_SIZE, props.totalBatches)
+  const batches: number[] = []
+  for (let i = pageStart.value; i < end; i++) batches.push(i)
+  return batches
 })
 
+const totalCarouselPages = computed(() => Math.ceil(props.totalBatches / PAGE_SIZE))
+const currentCarouselPage = computed(() => Math.floor(pageStart.value / PAGE_SIZE) + 1)
+
+function imageUrl(batch: number) {
+  return `/static/img/${props.userId}/${props.guid}.best_${batch}.png?v=${refreshKey.value}`
+}
+
 function prev() {
-  if (currentBatch.value > 0) currentBatch.value--
+  pageStart.value = Math.max(0, pageStart.value - PAGE_SIZE)
 }
 
 function next() {
-  if (currentBatch.value < props.totalBatches - 1) currentBatch.value++
+  if (pageStart.value + PAGE_SIZE < props.totalBatches) {
+    pageStart.value += PAGE_SIZE
+  }
 }
 
 async function refresh() {
-  await updateVisualization(props.guid, {
-    batch_ids: [currentBatch.value],
-  })
-  const old = currentBatch.value
-  currentBatch.value = -1
-  requestAnimationFrame(() => {
-    currentBatch.value = old
-  })
+  loading.value = true
+  try {
+    await updateVisualization(props.guid, {
+      batch_ids: visibleBatches.value,
+    })
+    refreshKey.value++
+  } finally {
+    loading.value = false
+  }
 }
 
 watch(
   () => props.totalBatches,
   (val) => {
-    if (currentBatch.value >= val) currentBatch.value = Math.max(0, val - 1)
+    if (pageStart.value >= val) pageStart.value = Math.max(0, val - PAGE_SIZE)
   },
 )
 </script>
@@ -51,8 +66,11 @@ watch(
   <div class="visualization">
     <div class="visualization__header">
       <h3 class="visualization__title">{{ t('aligner.visualization') }}</h3>
-      <button v-if="hasImages" class="visualization__refresh" @click="refresh">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <button v-if="hasImages" class="visualization__refresh" :disabled="loading" @click="refresh">
+        <svg
+          width="14" height="14" viewBox="0 0 14 14" fill="none"
+          :class="{ 'visualization__refresh-icon--spinning': loading }"
+        >
           <path d="M11 7a4 4 0 1 1-1.2-2.8M11 2v2.2H8.8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
         {{ t('aligner.refresh') }}
@@ -71,21 +89,30 @@ watch(
     </div>
 
     <template v-else>
-      <div class="visualization__image-wrapper">
-        <img :src="imageUrl" alt="Alignment visualization" class="visualization__image" />
+      <div class="visualization__content" :class="{ 'visualization__content--loading': loading }">
+        <div class="visualization__grid">
+          <div
+            v-for="batch in visibleBatches"
+            :key="batch"
+            class="visualization__grid-item"
+          >
+            <div class="visualization__batch-label">{{ batch + 1 }}</div>
+            <img :src="imageUrl(batch)" alt="Alignment visualization" class="visualization__image" />
+          </div>
+        </div>
       </div>
 
-      <div class="visualization__nav">
-        <button class="visualization__btn" :disabled="currentBatch <= 0" @click="prev">
+      <div v-if="totalCarouselPages > 1" class="visualization__nav">
+        <button class="visualization__btn" :disabled="pageStart <= 0" @click="prev">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path d="M8 3L5 7l3 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           {{ t('aligner.prev') }}
         </button>
-        <span class="visualization__info">{{ currentBatch + 1 }} / {{ totalBatches }}</span>
+        <span class="visualization__info">{{ currentCarouselPage }} / {{ totalCarouselPages }}</span>
         <button
           class="visualization__btn"
-          :disabled="currentBatch >= totalBatches - 1"
+          :disabled="pageStart + PAGE_SIZE >= totalBatches"
           @click="next"
         >
           {{ t('aligner.next') }}
@@ -135,9 +162,18 @@ watch(
   transition: all var(--transition-fast);
 }
 
-.visualization__refresh:hover {
+.visualization__refresh:hover:not(:disabled) {
   background: var(--color-bg-hover);
   border-color: var(--color-border-hover);
+}
+
+.visualization__refresh:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.visualization__refresh-icon--spinning {
+  animation: spin 0.8s linear infinite;
 }
 
 .visualization__empty {
@@ -154,15 +190,45 @@ watch(
   color: var(--color-border-input);
 }
 
-.visualization__image-wrapper {
+.visualization__content {
+  transition: opacity 0.15s ease;
   margin-bottom: var(--spacing-md);
-  text-align: center;
+}
+
+.visualization__content--loading {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.visualization__grid {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.visualization__grid-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+  width: 180px;
+}
+
+.visualization__batch-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
 }
 
 .visualization__image {
-  max-width: 200px;
+  width: 180px;
+  min-height: 200px;
+  object-fit: contain;
   border-radius: var(--radius);
   border: 1px solid var(--color-border);
+  background: var(--color-bg-hover);
 }
 
 .visualization__nav {
@@ -205,5 +271,9 @@ watch(
   min-width: 60px;
   text-align: center;
   font-variant-numeric: tabular-nums;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 </style>
