@@ -40,15 +40,21 @@ onUnmounted(() => {
 
 async function handleAlignAll() {
   await aligner.startAlignment(guid.value, {
-    batch_size: batchSize.value,
-    batch_count: batchCount.value || 0,
+    align_all: true,
+    batch_shift: batchShift.value,
+    window: window_.value,
+    use_proxy_from: useProxyFrom.value,
+    use_proxy_to: useProxyTo.value,
   })
 }
 
 async function handleAlignNext() {
   await aligner.alignNext(guid.value, {
-    batch_size: batchSize.value,
-    batch_count: 1,
+    amount: 1,
+    batch_shift: batchShift.value,
+    window: window_.value,
+    use_proxy_from: useProxyFrom.value,
+    use_proxy_to: useProxyTo.value,
   })
 }
 
@@ -57,7 +63,10 @@ async function handleStop() {
 }
 
 async function handleResolve() {
-  await aligner.resolveConflicts(guid.value, { batch_id: 0, decisions: {} })
+  await aligner.resolveConflicts(guid.value, {
+    use_proxy_from: useProxyFrom.value,
+    use_proxy_to: useProxyTo.value,
+  })
   const data = await getProgress(guid.value)
   aligner.selectedAlignment = data
 }

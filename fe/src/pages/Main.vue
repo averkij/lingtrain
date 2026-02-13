@@ -45,12 +45,38 @@ function handleLogout() {
     <aside class="sidebar" :class="{ collapsed: appStore.sidebarCollapsed }">
       <div class="sidebar-header">
         <RouterLink :to="{ name: 'apps' }" class="sidebar-logo">
-          <svg class="sidebar-logo__icon" width="24" height="24" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+          <svg class="sidebar-logo__icon" width="20" height="20" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
             <path d="M57.3,133.3c-13.9,8-22.5,22.9-22.5,38.9v254.6c0,16,8.6,31,22.5,38.9l92,53.1V80.2L57.3,133.3z" fill="#41479B"/>
             <path d="M146.3,517.2L277.7,593c13.9,8,31.1,8.1,44.9,0l220.5-127.4c6.8-3.9,12.4-9.6,16.3-16.2C422.6,375.4,285.8,301.4,149,227.3C148.1,323.9,147.2,420.5,146.3,517.2z" fill="#FF4B55"/>
             <path d="M565.6,172.3c0-8.7-2.6-17.1-7.1-24.2c-88.3,52.4-176.6,104.9-264.9,157.3c88,49,176,98,264,147c5.2-7.4,8.1-16.4,8.1-25.7V172.3z" fill="#73AF00"/>
             <path d="M558.6,148.3c-3.8-6.1-9.1-11.3-15.5-15L322.7,6.1c-6.9-4-14.7-6-22.5-6c-7.8,0-15.6,2-22.5,6L148.5,80.6v150.2l144.3,75.2L558.6,148.3z" fill="#FFE15A"/>
           </svg>
+          <!-- <svg class="sidebar-logo__icon" width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="-20 -20 640 640">
+            <g fill="none" stroke="#000" stroke-width="60" stroke-linejoin="round" stroke-linecap="round">
+              <path d="
+                M 300,10
+                L 543,133
+                Q 560,143 566,172
+                L 566,427
+                Q 564,443 549,452
+                L 300,590
+                Q 289,597 277,590
+                L 149,518
+                L 57,465
+                Q 35,452 35,427
+                L 35,172
+                Q 35,147 57,133
+                L 149,80
+                L 277,10
+                Q 289,2 300,10
+                Z
+              "/>
+              <line x1="149" y1="80" x2="149" y2="518"/>
+              <line x1="293" y1="306" x2="560" y2="172"/>
+              <line x1="293" y1="306" x2="549" y2="452"/>
+              <line x1="149" y1="230" x2="293" y2="306"/>
+            </g>
+          </svg> -->
         </RouterLink>
         <button
           class="sidebar-toggle"
@@ -58,7 +84,7 @@ function handleLogout() {
           :title="t('sidebar.collapse')"
           @click="appStore.toggleSidebar()"
         >
-          <svg class="sidebar-logo__icon toggle-logo" width="24" height="24" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+          <svg class="sidebar-logo__icon toggle-logo" width="20" height="20" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
             <path d="M57.3,133.3c-13.9,8-22.5,22.9-22.5,38.9v254.6c0,16,8.6,31,22.5,38.9l92,53.1V80.2L57.3,133.3z" fill="#41479B"/>
             <path d="M146.3,517.2L277.7,593c13.9,8,31.1,8.1,44.9,0l220.5-127.4c6.8-3.9,12.4-9.6,16.3-16.2C422.6,375.4,285.8,301.4,149,227.3C148.1,323.9,147.2,420.5,146.3,517.2z" fill="#FF4B55"/>
             <path d="M565.6,172.3c0-8.7-2.6-17.1-7.1-24.2c-88.3,52.4-176.6,104.9-264.9,157.3c88,49,176,98,264,147c5.2-7.4,8.1-16.4,8.1-25.7V172.3z" fill="#73AF00"/>
@@ -90,7 +116,7 @@ function handleLogout() {
           :class="{ 'nav-item--active': alignerActive }"
         >
           <svg class="nav-icon" width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M16 2L28.124 9V23L16 30L3.876 23V9L16 2Z" fill="#dc2626" />
+            <path d="M16 2L28.124 9V23L16 30L3.876 23V9L16 2Z" fill="#777" /> <!-- "#dc2626" is red -->
             <text x="16" y="21" text-anchor="middle" fill="white" font-size="15" font-weight="600" font-family="sans-serif">A</text>
           </svg>
           <span class="nav-label">{{ t('sidebar.aligner') }}</span>
@@ -101,7 +127,7 @@ function handleLogout() {
           :class="{ 'nav-item--active': handbookActive }"
         >
           <svg class="nav-icon" width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M16 2L28.124 9V23L16 30L3.876 23V9L16 2Z" fill="#2563eb" />
+            <path d="M16 2L28.124 9V23L16 30L3.876 23V9L16 2Z" fill="#777" /> <!-- "#2563eb" is blue -->
             <text x="16" y="21" text-anchor="middle" fill="white" font-size="15" font-weight="600" font-family="sans-serif">C</text>
           </svg>
           <span class="nav-label">{{ t('sidebar.handbook') }}</span>
@@ -112,7 +138,7 @@ function handleLogout() {
       <div class="sidebar-user">
         <button ref="userBtnRef" class="user-btn" @click.stop="toggleMenu">
           <svg class="user-avatar" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M16 2L28.124 9V23L16 30L3.876 23V9L16 2Z" fill="#16a34a" />
+            <path d="M16 2L28.124 9V23L16 30L3.876 23V9L16 2Z" fill="#777" /> <!-- "#16a34a" is green -->
             <text x="16" y="20.5" text-anchor="middle" fill="white" font-size="14" font-weight="600" font-family="sans-serif">L</text>
           </svg>
           <span class="user-name">{{ authStore.user?.username }}</span>

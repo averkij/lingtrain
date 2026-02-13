@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
+  <!--
+    Black linear isometric cube logo
+    Reimagined from original colored version
+    Professional, consistent stroke style
+  -->
+  <g fill="none" stroke="#000" stroke-width="9" stroke-linejoin="round" stroke-linecap="round">
+    <!-- Outer silhouette as single continuous path with subtle rounding at corners -->
+    <path d="
+      M 300,10
+      L 543,133
+      Q 560,143 566,172
+      L 566,427
+      Q 564,443 549,452
+      L 300,590
+      Q 289,597 277,590
+      L 149,518
+      L 57,465
+      Q 35,452 35,427
+      L 35,172
+      Q 35,147 57,133
+      L 149,80
+      L 277,10
+      Q 289,2 300,10
+      Z
+    "/>
+    
+    <!-- Inner edge: vertical left pillar -->
+    <line x1="149" y1="80" x2="149" y2="518"/>
+    
+    <!-- Inner edge: center to top-right corner -->
+    <line x1="293" y1="306" x2="560" y2="172"/>
+    
+    <!-- Inner edge: center to bottom-right corner -->
+    <line x1="293" y1="306" x2="549" y2="452"/>
+    
+    <!-- Inner edge: left join to center -->
+    <line x1="149" y1="230" x2="293" y2="306"/>
+  </g>
+</svg>

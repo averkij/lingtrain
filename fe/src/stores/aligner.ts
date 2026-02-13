@@ -17,6 +17,7 @@ import {
   getProgress,
   type AlignmentOut,
   type AlignmentCreate,
+  type AlignStartParams,
   type AlignNextParams,
   type ResolveConflictsParams,
 } from '@/api/alignments'
@@ -69,7 +70,7 @@ export const useAlignerStore = defineStore('aligner', () => {
     await fetchAlignments()
   }
 
-  async function startAlignment(guid: string, data: AlignNextParams) {
+  async function startAlignment(guid: string, data: AlignStartParams) {
     await apiStartAlignment(guid, data)
     startPolling(guid)
   }

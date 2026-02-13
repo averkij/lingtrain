@@ -19,9 +19,12 @@ export interface AlignmentOut {
   state: AlignmentStateValue
   curr_batches: number
   total_batches: number
+  is_deleted: boolean
   is_uploaded: boolean
   proxy_from_loaded: boolean
   proxy_to_loaded: boolean
+  document_from_id: number
+  document_to_id: number
   created_at: string
 }
 
@@ -31,19 +34,34 @@ export interface AlignmentCreate {
   document_to_guid: string
 }
 
+export interface AlignStartParams {
+  align_all?: boolean
+  batch_ids?: number[]
+  batch_shift?: number
+  window?: number
+  use_proxy_from?: boolean
+  use_proxy_to?: boolean
+}
+
 export interface AlignNextParams {
-  batch_size: number
-  batch_count: number
+  amount?: number
+  batch_shift?: number
+  window?: number
+  use_proxy_from?: boolean
+  use_proxy_to?: boolean
 }
 
 export interface ResolveConflictsParams {
-  batch_id: number
-  decisions: Record<string, string>
+  batch_ids?: number[]
+  use_proxy_from?: boolean
+  use_proxy_to?: boolean
+  handle_start?: boolean
+  handle_finish?: boolean
 }
 
 export interface VisualizationParams {
-  batch_id: number
-  type: string
+  batch_ids?: number[]
+  update_all?: boolean
 }
 
 export interface Conflict {
@@ -82,26 +100,26 @@ export function deleteAlignment(guid: string) {
   return apiFetch<void>(`/api/aligner/alignments/${guid}`, { method: 'DELETE' })
 }
 
-export function startAlignment(guid: string, data: AlignNextParams) {
-  return apiFetch<void>(`/api/aligner/alignments/${guid}/start`, {
+export function startAlignment(guid: string, data: AlignStartParams) {
+  return apiFetch<void>(`/api/aligner/alignments/${guid}/align`, {
     method: 'POST',
     body: JSON.stringify(data),
   })
 }
 
 export function alignNext(guid: string, data: AlignNextParams) {
-  return apiFetch<void>(`/api/aligner/alignments/${guid}/align-next`, {
+  return apiFetch<void>(`/api/aligner/alignments/${guid}/align/next`, {
     method: 'POST',
     body: JSON.stringify(data),
   })
 }
 
 export function stopAlignment(guid: string) {
-  return apiFetch<void>(`/api/aligner/alignments/${guid}/stop`, { method: 'POST' })
+  return apiFetch<void>(`/api/aligner/alignments/${guid}/align/stop`, { method: 'POST' })
 }
 
 export function resolveConflicts(guid: string, data: ResolveConflictsParams) {
-  return apiFetch<void>(`/api/aligner/alignments/${guid}/resolve-conflicts`, {
+  return apiFetch<void>(`/api/aligner/alignments/${guid}/resolve`, {
     method: 'POST',
     body: JSON.stringify(data),
   })
@@ -116,7 +134,7 @@ export function getConflictDetail(guid: string, id: number) {
 }
 
 export function updateVisualization(guid: string, data: VisualizationParams) {
-  return apiFetch<void>(`/api/aligner/alignments/${guid}/visualization`, {
+  return apiFetch<void>(`/api/aligner/alignments/${guid}/visualize`, {
     method: 'POST',
     body: JSON.stringify(data),
   })
