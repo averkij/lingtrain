@@ -8,6 +8,7 @@ const { t } = useI18n()
 const props = defineProps<{
   guid: string
   totalBatches: number
+  userId: number
 }>()
 
 const currentBatch = ref(0)
@@ -16,7 +17,7 @@ const hasImages = computed(() => props.totalBatches > 0)
 
 const imageUrl = computed(() => {
   if (!hasImages.value) return ''
-  return `/static/img/${props.guid}.best_${currentBatch.value}.png?t=${Date.now()}`
+  return `/static/img/${props.userId}/${props.guid}.best_${currentBatch.value}.png?t=${Date.now()}`
 })
 
 function prev() {
@@ -29,8 +30,7 @@ function next() {
 
 async function refresh() {
   await updateVisualization(props.guid, {
-    batch_id: currentBatch.value,
-    type: 'best',
+    batch_ids: [currentBatch.value],
   })
   const old = currentBatch.value
   currentBatch.value = -1

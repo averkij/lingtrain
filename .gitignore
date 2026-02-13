@@ -10,3 +10,5 @@ be/lingtrain*.db
 .playwright-mcp/console-2026-02-12T15-22-08-613Z.log
 .claude/settings.local.json
 be/data/*
+be/models_cache
+be/static/img/*
