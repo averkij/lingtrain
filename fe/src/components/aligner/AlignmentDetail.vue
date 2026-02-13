@@ -3,15 +3,18 @@ import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import { useAlignerStore } from '@/stores/aligner'
+import { useAuthStore } from '@/stores/auth'
 import { getProgress, uploadProxy, AlignmentState } from '@/api/alignments'
 import AlignmentSettings from './AlignmentSettings.vue'
 import AlignmentControls from './AlignmentControls.vue'
 import ProxyUploadPanel from './ProxyUploadPanel.vue'
 import VisualizationCarousel from './VisualizationCarousel.vue'
+import AlignmentEditor from './AlignmentEditor.vue'
 
 const { t } = useI18n()
 const route = useRoute()
 const aligner = useAlignerStore()
+const auth = useAuthStore()
 
 const guid = computed(() => route.params.guid as string)
 
@@ -157,7 +160,19 @@ async function handleProxyUpload(direction: 'from' | 'to', file: File) {
       <VisualizationCarousel
         :guid="guid"
         :total-batches="aligner.selectedAlignment.curr_batches"
+        :user-id="auth.user?.id ?? 0"
       />
+
+      <template v-if="aligner.selectedAlignment.curr_batches > 0">
+        <div class="alignment-detail__section-title">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 3h10M3 8h7M3 13h9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+          </svg>
+          {{ t('aligner.editor') }}
+        </div>
+        <p class="alignment-detail__info">{{ t('aligner.editorInfo') }}</p>
+        <AlignmentEditor :guid="guid" />
+      </template>
     </template>
 
     <div v-else class="alignment-detail__loading">

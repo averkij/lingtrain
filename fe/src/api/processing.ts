@@ -9,9 +9,12 @@ export interface ProcessingItem {
 
 export interface ProcessingResponse {
   items: ProcessingItem[]
-  total: number
-  page: number
-  count: number
+  meta: {
+    page: number
+    total_pages: number
+  }
+  proxy_from_dict: Record<string, unknown>
+  proxy_to_dict: Record<string, unknown>
 }
 
 export interface MetaResponse {
@@ -61,7 +64,7 @@ export interface ToggleExcludedParams {
 
 export function getProcessingPage(guid: string, count: number, page: number) {
   return apiFetch<ProcessingResponse>(
-    `/api/aligner/processing/${guid}?count=${count}&page=${page}`,
+    `/api/aligner/processing/${guid}/page?count=${count}&page=${page}`,
   )
 }
 
@@ -108,8 +111,11 @@ export function getCandidates(
 }
 
 export function toggleExcluded(guid: string, data: ToggleExcludedParams) {
-  return apiFetch<void>(`/api/aligner/processing/${guid}/toggle-excluded`, {
+  const params = new URLSearchParams({
+    line_id: String(data.index_id),
+    text_type: data.text_type,
+  })
+  return apiFetch<void>(`/api/aligner/processing/${guid}/exclude?${params}`, {
     method: 'POST',
-    body: JSON.stringify(data),
   })
 }

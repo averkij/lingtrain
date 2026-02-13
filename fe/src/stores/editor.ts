@@ -48,8 +48,8 @@ export const useEditorStore = defineStore('editor', () => {
     try {
       const res = await getProcessingPage(guid, count, page)
       processing.value = res.items
-      currentPage.value = res.page
-      totalPages.value = Math.ceil(res.total / count)
+      currentPage.value = res.meta.page
+      totalPages.value = res.meta.total_pages
     } finally {
       loading.value = false
     }
