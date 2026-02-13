@@ -5,6 +5,7 @@ import os
 import queue
 import sqlite3
 import time
+from dataclasses import dataclass
 from multiprocessing import Process, Queue
 
 import matplotlib
@@ -20,6 +21,26 @@ from app.models.alignment_progress import AlignmentProgress
 from app.services.file_storage import get_alignment_db_path, get_vis_img_path
 
 logger = logging.getLogger(__name__)
+
+
+@dataclass(frozen=True)
+class AlignmentInfo:
+    """Detached snapshot of Alignment fields for use outside the DB session."""
+    id: int
+    guid: str
+    lang_from: str
+    lang_to: str
+    total_batches: int
+
+    @staticmethod
+    def from_orm(a: Alignment) -> "AlignmentInfo":
+        return AlignmentInfo(
+            id=a.id,
+            guid=a.guid,
+            lang_from=a.lang_from,
+            lang_to=a.lang_to,
+            total_batches=a.total_batches,
+        )
 
 FINISH_PROCESS = "finish_process"
 
@@ -438,7 +459,7 @@ class AlignmentProcessor:
                 )
 
 
-def start_alignment(user_id: int, alignment: Alignment, data) -> None:
+def start_alignment(user_id: int, alignment: AlignmentInfo, data) -> None:
     from lingtrain_aligner import aligner, constants as la_con
 
     db_path = str(
@@ -514,7 +535,7 @@ def start_alignment(user_id: int, alignment: Alignment, data) -> None:
     proc.start_align()
 
 
-def align_next(user_id: int, alignment: Alignment, data) -> None:
+def align_next(user_id: int, alignment: AlignmentInfo, data) -> None:
     from lingtrain_aligner import aligner, constants as la_con
 
     db_path = str(
@@ -593,7 +614,7 @@ def align_next(user_id: int, alignment: Alignment, data) -> None:
     proc.start_align()
 
 
-def resolve_conflicts(user_id: int, alignment: Alignment, data) -> None:
+def resolve_conflicts(user_id: int, alignment: AlignmentInfo, data) -> None:
     from lingtrain_aligner import constants as la_con
 
     db_path = str(

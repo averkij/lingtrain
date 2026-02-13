@@ -19,6 +19,7 @@ from app.schemas.alignment import (
 )
 from app.services import alignment_service, processing_service
 from app.services.document_service import get_document_by_guid
+from app.services.processing_service import AlignmentInfo
 
 logger = logging.getLogger(__name__)
 
@@ -82,10 +83,11 @@ def start_alignment(
         )
     alignment_service.update_state(db, alignment.id, AlignmentState.IN_PROGRESS)
 
+    info = AlignmentInfo.from_orm(alignment)
     # Run in background thread to not block the response
     thread = Thread(
         target=processing_service.start_alignment,
-        args=(user.id, alignment, data),
+        args=(user.id, info, data),
         daemon=True,
     )
     thread.start()
@@ -106,9 +108,10 @@ def align_next(
 
     alignment_service.update_state(db, alignment.id, AlignmentState.IN_PROGRESS)
 
+    info = AlignmentInfo.from_orm(alignment)
     thread = Thread(
         target=processing_service.align_next,
-        args=(user.id, alignment, data),
+        args=(user.id, info, data),
         daemon=True,
     )
     thread.start()
@@ -143,9 +146,10 @@ def resolve_conflicts(
 
     alignment_service.update_state(db, alignment.id, AlignmentState.IN_PROGRESS)
 
+    info = AlignmentInfo.from_orm(alignment)
     thread = Thread(
         target=processing_service.resolve_conflicts,
-        args=(user.id, alignment, data),
+        args=(user.id, info, data),
         daemon=True,
     )
     thread.start()
