@@ -180,3 +180,38 @@ def increment_state(db: Session, alignment_id: int, state: int) -> None:
         alignment.state = state
         alignment.curr_batches = count
         db.commit()
+
+
+def upload_proxy(
+    user_id: int, alignment: Alignment, direction: str, content: str
+) -> None:
+    from lingtrain_aligner import aligner
+
+    lang = alignment.lang_from if direction == "from" else alignment.lang_to
+    proxy_dir = get_proxy_dir(user_id, lang)
+    proxy_dir.mkdir(parents=True, exist_ok=True)
+
+    # Use alignment guid as proxy filename to avoid collisions
+    proxy_path = proxy_dir / f"{alignment.guid}.proxy.txt"
+    with open(proxy_path, "w", encoding="utf-8") as f:
+        f.write(content)
+
+    db_path = get_alignment_db_path(
+        user_id, alignment.lang_from, alignment.lang_to, alignment.guid
+    )
+    aligner.load_proxy(str(db_path), str(proxy_path), direction)
+
+
+def update_proxy_loaded(
+    db: Session, alignment_id: int, direction: str
+) -> Alignment | None:
+    alignment = db.get(Alignment, alignment_id)
+    if not alignment:
+        return None
+    if direction == "from":
+        alignment.proxy_from_loaded = True
+    else:
+        alignment.proxy_to_loaded = True
+    db.commit()
+    db.refresh(alignment)
+    return alignment

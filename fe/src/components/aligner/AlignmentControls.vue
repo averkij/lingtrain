@@ -20,7 +20,7 @@ function canStart() {
 }
 
 function canAlignNext() {
-  return props.state === AlignmentState.IN_PROGRESS_DONE
+  return props.state === AlignmentState.INIT || props.state === AlignmentState.IN_PROGRESS_DONE
 }
 
 function canStop() {
@@ -39,7 +39,7 @@ function canResolve() {
     <div class="alignment-controls__buttons">
       <button
         class="alignment-controls__btn alignment-controls__btn--primary"
-        :disabled="!canStart()"
+        disabled
         @click="emit('alignAll')"
       >
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">

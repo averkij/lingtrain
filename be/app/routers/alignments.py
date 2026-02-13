@@ -3,7 +3,7 @@
 import logging
 from threading import Thread
 
-from fastapi import APIRouter, Depends, HTTPException, Query, status
+from fastapi import APIRouter, Depends, HTTPException, Query, UploadFile, status
 from sqlalchemy.orm import Session
 
 from app.database import get_db
@@ -196,6 +196,28 @@ def update_visualization(
 
     processing_service.update_visualization(user.id, alignment, batch_ids, update_all)
     return {"status": "ok"}
+
+
+@router.post("/{guid}/proxy/{direction}", response_model=AlignmentOut)
+async def upload_proxy(
+    guid: str,
+    direction: str,
+    file: UploadFile,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    if direction not in ("from", "to"):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="direction must be 'from' or 'to'",
+        )
+    alignment = alignment_service.get_alignment(db, user.id, guid)
+    if not alignment:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Alignment not found")
+
+    content = (await file.read()).decode("utf-8")
+    alignment_service.upload_proxy(user.id, alignment, direction, content)
+    return alignment_service.update_proxy_loaded(db, alignment.id, direction)
 
 
 @router.get("/{guid}/progress", response_model=AlignmentOut)

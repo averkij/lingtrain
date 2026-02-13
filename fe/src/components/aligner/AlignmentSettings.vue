@@ -18,11 +18,11 @@ const useProxyTo = defineModel<boolean>('useProxyTo', { required: true })
     <div class="alignment-settings__grid">
       <div class="alignment-settings__field">
         <label class="alignment-settings__label">{{ t('aligner.batchSize') }}</label>
-        <input v-model.number="batchSize" type="number" min="1" class="alignment-settings__input" />
+        <input v-model.number="batchSize" type="number" min="1" disabled class="alignment-settings__input" />
       </div>
       <div class="alignment-settings__field">
         <label class="alignment-settings__label">{{ t('aligner.batchCount') }}</label>
-        <input v-model.number="batchCount" type="number" min="1" class="alignment-settings__input" />
+        <input v-model.number="batchCount" type="number" min="1" max="5" class="alignment-settings__input" />
       </div>
       <div class="alignment-settings__field">
         <label class="alignment-settings__label">{{ t('aligner.window') }}</label>
@@ -30,7 +30,16 @@ const useProxyTo = defineModel<boolean>('useProxyTo', { required: true })
       </div>
       <div class="alignment-settings__field">
         <label class="alignment-settings__label">{{ t('aligner.batchShift') }}</label>
-        <input v-model.number="batchShift" type="number" min="0" class="alignment-settings__input" />
+        <div class="alignment-settings__slider-row">
+          <input v-model.number="batchShift" type="range" min="-200" max="200" step="10" class="alignment-settings__slider" />
+          <span class="alignment-settings__slider-value">{{ batchShift }}</span>
+          <button class="alignment-settings__reset-btn" :title="'Reset'" @click="batchShift = 0">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M2.5 2.5v3.5h3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M2.8 6A4.5 4.5 0 1 1 3.5 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -100,10 +109,59 @@ const useProxyTo = defineModel<boolean>('useProxyTo', { required: true })
   transition: border-color var(--transition-fast);
 }
 
+.alignment-settings__input:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
 .alignment-settings__input:focus {
   outline: none;
   border-color: var(--color-primary);
   box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.alignment-settings__slider-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.alignment-settings__slider {
+  flex: 1;
+  height: 4px;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+.alignment-settings__slider-value {
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+  min-width: 36px;
+  text-align: right;
+}
+
+.alignment-settings__reset-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-bg-surface);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.alignment-settings__reset-btn:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  background: var(--color-primary-subtle);
 }
 
 .alignment-settings__checkboxes {

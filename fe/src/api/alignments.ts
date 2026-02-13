@@ -1,4 +1,4 @@
-import { apiFetch } from './client'
+import { apiFetch, apiUpload } from './client'
 
 export const AlignmentState = {
   INIT: 0,
@@ -138,6 +138,15 @@ export function updateVisualization(guid: string, data: VisualizationParams) {
     method: 'POST',
     body: JSON.stringify(data),
   })
+}
+
+export function uploadProxy(guid: string, direction: 'from' | 'to', file: File) {
+  const formData = new FormData()
+  formData.append('file', file)
+  return apiUpload<AlignmentOut>(
+    `/api/aligner/alignments/${guid}/proxy/${direction}`,
+    formData,
+  )
 }
 
 export function getProgress(guid: string) {

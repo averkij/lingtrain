@@ -3,9 +3,10 @@ import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import { useAlignerStore } from '@/stores/aligner'
-import { getProgress, AlignmentState } from '@/api/alignments'
+import { getProgress, uploadProxy, AlignmentState } from '@/api/alignments'
 import AlignmentSettings from './AlignmentSettings.vue'
 import AlignmentControls from './AlignmentControls.vue'
+import ProxyUploadPanel from './ProxyUploadPanel.vue'
 import VisualizationCarousel from './VisualizationCarousel.vue'
 
 const { t } = useI18n()
@@ -15,7 +16,7 @@ const aligner = useAlignerStore()
 const guid = computed(() => route.params.guid as string)
 
 const batchSize = ref(200)
-const batchCount = ref(0)
+const batchCount = ref(1)
 const window_ = ref(40)
 const batchShift = ref(0)
 const useProxyFrom = ref(false)
@@ -50,7 +51,7 @@ async function handleAlignAll() {
 
 async function handleAlignNext() {
   await aligner.alignNext(guid.value, {
-    amount: 1,
+    amount: batchCount.value,
     batch_shift: batchShift.value,
     window: window_.value,
     use_proxy_from: useProxyFrom.value,
@@ -68,6 +69,11 @@ async function handleResolve() {
     use_proxy_to: useProxyTo.value,
   })
   const data = await getProgress(guid.value)
+  aligner.selectedAlignment = data
+}
+
+async function handleProxyUpload(direction: 'from' | 'to', file: File) {
+  const data = await uploadProxy(guid.value, direction, file)
   aligner.selectedAlignment = data
 }
 </script>
@@ -122,6 +128,29 @@ async function handleResolve() {
           @align-next="handleAlignNext"
           @stop="handleStop"
           @resolve="handleResolve"
+        />
+      </div>
+
+      <div class="alignment-detail__section-title">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M2 3h5l1.5 2H14v8H2V3Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" />
+          <path d="M5.5 8h5M5.5 10.5h3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+        </svg>
+        {{ t('aligner.proxyDocuments') }}
+      </div>
+      <p class="alignment-detail__info">{{ t('aligner.proxyInfo') }}</p>
+      <div class="alignment-detail__row">
+        <ProxyUploadPanel
+          :label="t('aligner.proxyFrom')"
+          :lang="aligner.selectedAlignment.lang_from"
+          :loaded="aligner.selectedAlignment.proxy_from_loaded"
+          @upload="(file) => handleProxyUpload('from', file)"
+        />
+        <ProxyUploadPanel
+          :label="t('aligner.proxyTo')"
+          :lang="aligner.selectedAlignment.lang_to"
+          :loaded="aligner.selectedAlignment.proxy_to_loaded"
+          @upload="(file) => handleProxyUpload('to', file)"
         />
       </div>
 
@@ -240,6 +269,37 @@ async function handleResolve() {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--spacing-lg);
+}
+
+.alignment-detail__section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text-strong);
+  margin-top: var(--spacing-md);
+}
+
+.alignment-detail__section-title svg {
+  color: var(--color-primary);
+}
+
+.alignment-detail__info {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin: 0;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-info-subtle);
+  border-radius: var(--radius);
+  border-left: 3px solid var(--color-primary);
+}
+
+.alignment-detail__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
+  align-items: start;
 }
 
 .alignment-detail__loading {

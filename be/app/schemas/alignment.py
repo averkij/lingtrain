@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class AlignmentOut(BaseModel):
@@ -39,7 +39,7 @@ class AlignStart(BaseModel):
 
 
 class AlignNext(BaseModel):
-    amount: int = 1
+    amount: int = Field(default=1, ge=1, le=5)
     batch_shift: int = 0
     window: int = 50
     use_proxy_from: bool = False
