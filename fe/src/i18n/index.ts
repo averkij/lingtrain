@@ -22,7 +22,9 @@ const messages = {
     },
     sidebar: {
       collapse: 'Collapse',
+      apps: 'Apps',
       aligner: 'Aligner',
+      handbook: 'Handbook',
       settings: 'Settings',
       help: 'Help',
       logOut: 'Log out',
@@ -127,6 +129,13 @@ const messages = {
       emailVerified: 'Email verified! You can now sign in.',
       resendFailed: 'Failed to resend verification code',
     },
+    apps: {
+      welcome: 'Welcome',
+      alignerTitle: 'Aligner',
+      alignerDesc: 'ML-powered text alignment platform for creating parallel corpora and bilingual books. Supports 50–200+ languages with sentence-level alignment using state-of-the-art embedding models.',
+      handbookTitle: 'Handbook',
+      handbookDesc: 'Language handbook with common expressions and dataset descriptions.',
+    },
     admin: {
       title: 'Admin Panel',
       usersTable: 'Users',
@@ -151,7 +160,9 @@ const messages = {
     },
     sidebar: {
       collapse: 'Свернуть',
+      apps: 'Приложения',
       aligner: 'Выравниватель',
+      handbook: 'Справочник',
       settings: 'Настройки',
       help: 'Помощь',
       logOut: 'Выйти',
@@ -255,6 +266,13 @@ const messages = {
       verifying: 'Проверка…',
       emailVerified: 'Email подтверждён! Теперь вы можете войти.',
       resendFailed: 'Не удалось отправить код повторно',
+    },
+    apps: {
+      welcome: 'Добро пожаловать',
+      alignerTitle: 'Выравниватель',
+      alignerDesc: 'Платформа выравнивания текстов на основе ML для создания параллельных корпусов и двуязычных книг. Поддержка 50–200+ языков с выравниванием на уровне предложений.',
+      handbookTitle: 'Справочник',
+      handbookDesc: 'Здесь будет языковой справочник с частыми выражениями и описаниями датасетов.',
     },
     admin: {
       title: 'Панель администратора',

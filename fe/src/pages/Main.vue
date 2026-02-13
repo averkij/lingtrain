@@ -12,6 +12,7 @@ const appStore = useAppStore()
 const authStore = useAuthStore()
 
 const alignerActive = computed(() => route.path.startsWith('/aligner'))
+const handbookActive = computed(() => route.path.startsWith('/handbook'))
 
 const menuOpen = ref(false)
 const menuPosition = ref({ left: '0px', bottom: '0px' })
@@ -78,6 +79,17 @@ function handleLogout() {
             <text x="16" y="21" text-anchor="middle" fill="white" font-size="15" font-weight="600" font-family="sans-serif">A</text>
           </svg>
           <span class="nav-label">{{ t('sidebar.aligner') }}</span>
+        </RouterLink>
+        <RouterLink
+          :to="{ name: 'handbook' }"
+          class="nav-item"
+          :class="{ 'nav-item--active': handbookActive }"
+        >
+          <svg class="nav-icon" width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 2L28.124 9V23L16 30L3.876 23V9L16 2Z" fill="#2563eb" />
+            <text x="16" y="21" text-anchor="middle" fill="white" font-size="15" font-weight="600" font-family="sans-serif">C</text>
+          </svg>
+          <span class="nav-label">{{ t('sidebar.handbook') }}</span>
         </RouterLink>
       </nav>
 
@@ -238,6 +250,7 @@ function handleLogout() {
   cursor: pointer;
   transition: background-color var(--transition-fast);
   overflow: hidden;
+  margin-bottom: 8px;
 }
 
 .nav-item:hover {

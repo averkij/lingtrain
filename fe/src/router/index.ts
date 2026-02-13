@@ -12,7 +12,18 @@ const router = createRouter({
     {
       path: '/',
       component: () => import('@/pages/Main.vue'),
+      redirect: { name: 'apps' },
       children: [
+        {
+          path: 'apps',
+          name: 'apps',
+          component: () => import('@/pages/Apps.vue'),
+        },
+        {
+          path: 'handbook',
+          name: 'handbook',
+          component: () => import('@/pages/Handbook.vue'),
+        },
         {
           path: 'aligner',
           component: () => import('@/pages/Aligner.vue'),
@@ -62,7 +73,7 @@ router.beforeEach(async (to) => {
   }
 
   if (to.name === 'landing' && authStore.isAuthenticated) {
-    return { name: 'aligner-documents' }
+    return { name: 'apps' }
   }
 
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
@@ -70,7 +81,7 @@ router.beforeEach(async (to) => {
   }
 
   if (to.meta.requiresRole && authStore.user?.role !== to.meta.requiresRole) {
-    return { name: 'aligner-documents' }
+    return { name: 'apps' }
   }
 })
 
