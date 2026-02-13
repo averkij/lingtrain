@@ -44,13 +44,28 @@ function handleLogout() {
   <div class="main-layout" @click="closeMenu">
     <aside class="sidebar" :class="{ collapsed: appStore.sidebarCollapsed }">
       <div class="sidebar-header">
+        <RouterLink :to="{ name: 'apps' }" class="sidebar-logo">
+          <svg class="sidebar-logo__icon" width="24" height="24" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+            <path d="M57.3,133.3c-13.9,8-22.5,22.9-22.5,38.9v254.6c0,16,8.6,31,22.5,38.9l92,53.1V80.2L57.3,133.3z" fill="#41479B"/>
+            <path d="M146.3,517.2L277.7,593c13.9,8,31.1,8.1,44.9,0l220.5-127.4c6.8-3.9,12.4-9.6,16.3-16.2C422.6,375.4,285.8,301.4,149,227.3C148.1,323.9,147.2,420.5,146.3,517.2z" fill="#FF4B55"/>
+            <path d="M565.6,172.3c0-8.7-2.6-17.1-7.1-24.2c-88.3,52.4-176.6,104.9-264.9,157.3c88,49,176,98,264,147c5.2-7.4,8.1-16.4,8.1-25.7V172.3z" fill="#73AF00"/>
+            <path d="M558.6,148.3c-3.8-6.1-9.1-11.3-15.5-15L322.7,6.1c-6.9-4-14.7-6-22.5-6c-7.8,0-15.6,2-22.5,6L148.5,80.6v150.2l144.3,75.2L558.6,148.3z" fill="#FFE15A"/>
+          </svg>
+        </RouterLink>
         <button
           class="sidebar-toggle"
+          :class="{ 'sidebar-toggle--collapsed': appStore.sidebarCollapsed }"
           :title="t('sidebar.collapse')"
           @click="appStore.toggleSidebar()"
         >
+          <svg class="sidebar-logo__icon toggle-logo" width="24" height="24" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+            <path d="M57.3,133.3c-13.9,8-22.5,22.9-22.5,38.9v254.6c0,16,8.6,31,22.5,38.9l92,53.1V80.2L57.3,133.3z" fill="#41479B"/>
+            <path d="M146.3,517.2L277.7,593c13.9,8,31.1,8.1,44.9,0l220.5-127.4c6.8-3.9,12.4-9.6,16.3-16.2C422.6,375.4,285.8,301.4,149,227.3C148.1,323.9,147.2,420.5,146.3,517.2z" fill="#FF4B55"/>
+            <path d="M565.6,172.3c0-8.7-2.6-17.1-7.1-24.2c-88.3,52.4-176.6,104.9-264.9,157.3c88,49,176,98,264,147c5.2-7.4,8.1-16.4,8.1-25.7V172.3z" fill="#73AF00"/>
+            <path d="M558.6,148.3c-3.8-6.1-9.1-11.3-15.5-15L322.7,6.1c-6.9-4-14.7-6-22.5-6c-7.8,0-15.6,2-22.5,6L148.5,80.6v150.2l144.3,75.2L558.6,148.3z" fill="#FFE15A"/>
+          </svg>
           <svg
-            class="toggle-icon"
+            class="toggle-icon toggle-chevron"
             :class="{ rotated: appStore.sidebarCollapsed }"
             width="18"
             height="18"
@@ -180,9 +195,9 @@ function handleLogout() {
 .sidebar-header {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   height: var(--sidebar-width-collapsed);
-  padding: 0 var(--spacing-md);
+  padding: 0 var(--spacing-sm);
   flex-shrink: 0;
 }
 
@@ -191,7 +206,27 @@ function handleLogout() {
   padding: 0;
 }
 
+/* Logo link in expanded sidebar */
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.sidebar.collapsed .sidebar-logo {
+  display: none;
+}
+
+.sidebar-logo__icon {
+  display: block;
+}
+
+/* Toggle button */
 .sidebar-toggle {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -212,11 +247,38 @@ function handleLogout() {
   color: var(--color-text-subtle);
 }
 
-.toggle-icon {
-  transition: transform var(--transition-normal);
+/* In expanded state: hide logo, show chevron */
+.toggle-logo {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
 }
 
-.toggle-icon.rotated {
+.toggle-chevron {
+  position: absolute;
+  opacity: 1;
+  transition: opacity 0.2s ease, transform var(--transition-normal);
+}
+
+/* In collapsed state: show logo, hide chevron; on hover swap */
+.sidebar-toggle--collapsed .toggle-logo {
+  opacity: 1;
+}
+
+.sidebar-toggle--collapsed .toggle-chevron {
+  opacity: 0;
+}
+
+.sidebar-toggle--collapsed:hover .toggle-logo {
+  opacity: 0;
+}
+
+.sidebar-toggle--collapsed:hover .toggle-chevron {
+  opacity: 1;
+}
+
+.toggle-chevron.rotated {
   transform: rotate(180deg);
 }
 
