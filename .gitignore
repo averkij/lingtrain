@@ -2,3 +2,11 @@ nul
 be/lingtrain*.db
 .playwright-mcp/page-2026-02-11T18-08-20-137Z.png
 .playwright-mcp/page-2026-02-11T18-08-57-071Z.png
+.playwright-mcp/console-2026-02-12T15-22-34-870Z.log
+.playwright-mcp/console-2026-02-12T15-19-38-904Z.log
+.playwright-mcp/console-2026-02-12T15-20-21-570Z.log
+.playwright-mcp/console-2026-02-12T15-20-37-014Z.log
+.playwright-mcp/console-2026-02-12T15-21-00-706Z.log
+.playwright-mcp/console-2026-02-12T15-22-08-613Z.log
+.claude/settings.local.json
+be/data/*
