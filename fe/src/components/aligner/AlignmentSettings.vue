@@ -30,7 +30,7 @@ const useProxyTo = defineModel<boolean>('useProxyTo', { required: true })
       </div>
       <div class="alignment-settings__field">
         <label class="alignment-settings__label">{{ t('aligner.batchShift') }}</label>
-        <div class="alignment-settings__slider-row">
+        <div class="alignment-settings__shift-row">
           <input v-model.number="batchShift" type="range" min="-200" max="200" step="10" class="alignment-settings__slider" />
           <span class="alignment-settings__slider-value">{{ batchShift }}</span>
           <button class="alignment-settings__reset-btn" :title="'Reset'" @click="batchShift = 0">
@@ -120,10 +120,11 @@ const useProxyTo = defineModel<boolean>('useProxyTo', { required: true })
   box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
 }
 
-.alignment-settings__slider-row {
+.alignment-settings__shift-row {
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
+  height: 35px;
 }
 
 .alignment-settings__slider {

@@ -71,5 +71,13 @@ const tabs = [
 .aligner-content {
   flex: 1;
   overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.aligner-content > * {
+  width: 85%;
+  max-width: 1400px;
 }
 </style>

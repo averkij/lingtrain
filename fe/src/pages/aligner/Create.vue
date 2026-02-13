@@ -55,11 +55,10 @@ async function handlePreview() {
 
 <style scoped>
 .aligner-create {
-  padding: var(--spacing-xl) var(--spacing-2xl);
+  padding: var(--spacing-xl) 0;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xl);
-  max-width: 1200px;
 }
 
 h1 {

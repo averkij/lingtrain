@@ -184,11 +184,10 @@ async function handleProxyUpload(direction: 'from' | 'to', file: File) {
 
 <style scoped>
 .alignment-detail {
-  padding: var(--spacing-xl) var(--spacing-2xl);
+  padding: var(--spacing-xl) 0;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-lg);
-  max-width: 1200px;
 }
 
 .alignment-detail__header {

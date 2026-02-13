@@ -108,8 +108,7 @@ async function handleDelete(guid: string) {
 
 <style scoped>
 .aligner-alignments {
-  padding: var(--spacing-xl) var(--spacing-2xl);
-  max-width: 1200px;
+  padding: var(--spacing-xl) 0;
 }
 
 .aligner-alignments__header {
