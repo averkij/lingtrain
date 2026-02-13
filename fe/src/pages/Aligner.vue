@@ -38,31 +38,33 @@ const tabs = [
 
 .aligner-tabs {
   display: flex;
-  gap: var(--spacing-xs);
+  gap: 2px;
   padding: var(--spacing-md) var(--spacing-xl) 0;
   border-bottom: 1px solid var(--color-border);
   flex-shrink: 0;
+  background: var(--color-bg-surface);
 }
 
 .aligner-tab {
-  padding: var(--spacing-sm) var(--spacing-lg);
+  padding: 10px var(--spacing-xl);
   font-size: 13px;
   font-weight: 500;
   color: var(--color-text-muted);
   text-decoration: none;
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
-  transition:
-    color var(--transition-fast),
-    border-color var(--transition-fast);
+  border-radius: var(--radius) var(--radius) 0 0;
+  transition: all var(--transition-fast);
 }
 
 .aligner-tab:hover {
-  color: var(--color-text-subtle);
+  color: var(--color-text);
+  background: var(--color-bg-hover);
 }
 
 .aligner-tab--active {
   color: var(--color-primary);
+  font-weight: 600;
   border-bottom-color: var(--color-primary);
 }
 

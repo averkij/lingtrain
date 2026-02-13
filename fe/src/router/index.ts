@@ -29,6 +29,11 @@ const router = createRouter({
               component: () => import('@/pages/aligner/Alignments.vue'),
             },
             {
+              path: 'alignments/:guid',
+              name: 'aligner-alignment-detail',
+              component: () => import('@/components/aligner/AlignmentDetail.vue'),
+            },
+            {
               path: 'create',
               name: 'aligner-create',
               component: () => import('@/pages/aligner/Create.vue'),
