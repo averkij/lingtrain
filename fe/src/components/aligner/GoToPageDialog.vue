@@ -97,7 +97,7 @@ function handleGo() {
 }
 
 .dialog__title {
-  font-size: 16px;
+  font-size: var(--font-size-section-title);
   font-weight: 700;
   color: var(--color-text-strong);
   letter-spacing: -0.2px;
@@ -129,7 +129,7 @@ function handleGo() {
 .dialog__input {
   flex: 1;
   padding: 8px var(--spacing-md);
-  font-size: 14px;
+  font-size: var(--font-size-input);
   font-weight: 500;
   color: var(--color-text);
   border: 1px solid var(--color-border-input);
@@ -144,7 +144,7 @@ function handleGo() {
 }
 
 .dialog__hint {
-  font-size: 14px;
+  font-size: var(--font-size-input);
   color: var(--color-text-muted);
   font-weight: 500;
 }
@@ -157,7 +157,7 @@ function handleGo() {
 
 .dialog__btn {
   padding: 8px var(--spacing-lg);
-  font-size: 13px;
+  font-size: var(--font-size-body);
   font-weight: 600;
   border-radius: var(--radius);
   cursor: pointer;

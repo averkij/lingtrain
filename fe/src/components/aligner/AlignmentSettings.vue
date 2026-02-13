@@ -71,7 +71,7 @@ const useProxyTo = defineModel<boolean>('useProxyTo', { required: true })
 }
 
 .alignment-settings__title {
-  font-size: 13px;
+  font-size: var(--font-size-subsection-title);
   font-weight: 700;
   color: var(--color-text-strong);
 }
@@ -89,7 +89,7 @@ const useProxyTo = defineModel<boolean>('useProxyTo', { required: true })
 }
 
 .alignment-settings__label {
-  font-size: 11px;
+  font-size: var(--font-size-xs);
   font-weight: 600;
   color: var(--color-text-muted);
   text-transform: uppercase;
@@ -98,7 +98,7 @@ const useProxyTo = defineModel<boolean>('useProxyTo', { required: true })
 
 .alignment-settings__input {
   padding: 7px var(--spacing-md);
-  font-size: 14px;
+  font-size: var(--font-size-input);
   font-weight: 500;
   color: var(--color-text);
   background: var(--color-bg-surface);
@@ -135,7 +135,7 @@ const useProxyTo = defineModel<boolean>('useProxyTo', { required: true })
 }
 
 .alignment-settings__slider-value {
-  font-size: 13px;
+  font-size: var(--font-size-body);
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   color: var(--color-text);
@@ -174,7 +174,7 @@ const useProxyTo = defineModel<boolean>('useProxyTo', { required: true })
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
-  font-size: 13px;
+  font-size: var(--font-size-body);
   color: var(--color-text);
   cursor: pointer;
   user-select: none;

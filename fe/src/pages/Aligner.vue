@@ -1,13 +1,22 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 
 const { t } = useI18n()
+const route = useRoute()
 
 const tabs = [
   { name: 'aligner-documents', label: () => t('aligner.documents') },
-  { name: 'aligner-alignments', label: () => t('aligner.alignments') },
+  { name: 'aligner-alignments', label: () => t('aligner.alignments'), matchNames: ['aligner-alignment-detail'] },
   { name: 'aligner-create', label: () => t('aligner.create') },
 ]
+
+function isTabActive(tab: typeof tabs[number]) {
+  const currentName = route.name as string
+  if (currentName === tab.name) return true
+  return tab.matchNames?.includes(currentName) ?? false
+}
 </script>
 
 <template>
@@ -18,7 +27,7 @@ const tabs = [
         :key="tab.name"
         :to="{ name: tab.name }"
         class="aligner-tab"
-        active-class="aligner-tab--active"
+        :class="{ 'aligner-tab--active': isTabActive(tab) }"
       >
         {{ tab.label() }}
       </RouterLink>
@@ -47,7 +56,7 @@ const tabs = [
 
 .aligner-tab {
   padding: 10px var(--spacing-xl);
-  font-size: 13px;
+  font-size: var(--font-size-body);
   font-weight: 500;
   color: var(--color-text-muted);
   text-decoration: none;
@@ -73,11 +82,10 @@ const tabs = [
   overflow-y: auto;
   display: flex;
   justify-content: center;
-  font-size: 14px;
 }
 
 .aligner-content > * {
-  width: 85%;
-  max-width: 1400px;
+  width: var(--content-width);
+  max-width: var(--content-max-width);
 }
 </style>

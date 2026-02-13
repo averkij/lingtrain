@@ -82,14 +82,14 @@ const router = useRouter()
 }
 
 .app-card__title {
-  font-size: 15px;
+  font-size: var(--font-size-subsection-title);
   font-weight: 600;
   color: var(--color-text-strong);
   margin-bottom: var(--spacing-xs);
 }
 
 .app-card__desc {
-  font-size: 13px;
+  font-size: var(--font-size-body);
   color: var(--color-text-muted);
   line-height: 1.5;
 }

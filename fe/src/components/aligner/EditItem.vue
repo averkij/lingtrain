@@ -208,7 +208,7 @@ function handleShift(direction: number) {
 }
 
 .edit-item__id {
-  font-size: 11px;
+  font-size: var(--font-size-xs);
   color: var(--color-text-muted-2);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
@@ -247,7 +247,7 @@ function handleShift(direction: number) {
 }
 
 .edit-item__side-label {
-  font-size: 10px;
+  font-size: var(--font-size-2xs);
   font-weight: 600;
   color: var(--color-text-muted);
   text-transform: uppercase;
@@ -255,7 +255,7 @@ function handleShift(direction: number) {
 }
 
 .edit-item__line-ids {
-  font-size: 10px;
+  font-size: var(--font-size-2xs);
   font-weight: 600;
   color: var(--color-primary);
   font-variant-numeric: tabular-nums;
@@ -265,7 +265,7 @@ function handleShift(direction: number) {
 }
 
 .edit-item__text {
-  font-size: 13px;
+  font-size: var(--font-size-body);
   color: var(--color-text);
   line-height: 1.55;
   padding: var(--spacing-xs) var(--spacing-sm);
@@ -287,7 +287,7 @@ function handleShift(direction: number) {
 
 .edit-item__textarea {
   width: 100%;
-  font-size: 13px;
+  font-size: var(--font-size-body);
   color: var(--color-text);
   border: 1px solid var(--color-border-input);
   border-radius: var(--radius);
@@ -318,7 +318,7 @@ function handleShift(direction: number) {
 
 .edit-item__tool {
   padding: 2px var(--spacing-sm);
-  font-size: 11px;
+  font-size: var(--font-size-xs);
   font-weight: 500;
   color: var(--color-primary);
   background: none;
@@ -338,7 +338,7 @@ function handleShift(direction: number) {
   align-items: center;
   gap: 3px;
   padding: 3px var(--spacing-sm);
-  font-size: 11px;
+  font-size: var(--font-size-xs);
   font-weight: 500;
   color: var(--color-text);
   background: var(--color-bg-surface);

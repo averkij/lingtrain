@@ -105,13 +105,13 @@ function handleDrop(e: DragEvent) {
 }
 
 .proxy-panel__title {
-  font-size: 13px;
+  font-size: var(--font-size-subsection-title);
   font-weight: 700;
   color: var(--color-text-strong);
 }
 
 .proxy-panel__lang {
-  font-size: 11px;
+  font-size: var(--font-size-xs);
   font-weight: 600;
   color: var(--color-text-muted);
   background: var(--color-bg-hover);
@@ -120,7 +120,7 @@ function handleDrop(e: DragEvent) {
 }
 
 .proxy-panel__status {
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   font-weight: 600;
   color: var(--color-text-muted);
 }
@@ -130,7 +130,7 @@ function handleDrop(e: DragEvent) {
 }
 
 .proxy-panel__hint {
-  font-size: 11px;
+  font-size: var(--font-size-xs);
   color: var(--color-text-muted);
   margin: 0;
   line-height: 1.4;
@@ -178,7 +178,7 @@ function handleDrop(e: DragEvent) {
 }
 
 .proxy-panel__dropzone-icon {
-  font-size: 20px;
+  font-size: var(--font-size-icon-lg);
   font-weight: 300;
   color: var(--color-text-muted);
   width: 32px;
@@ -191,7 +191,7 @@ function handleDrop(e: DragEvent) {
 }
 
 .proxy-panel__dropzone-text {
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-muted);
 }
 
@@ -200,7 +200,7 @@ function handleDrop(e: DragEvent) {
   align-items: center;
   justify-content: center;
   gap: var(--spacing-sm);
-  font-size: 13px;
+  font-size: var(--font-size-body);
   color: var(--color-primary);
 }
 

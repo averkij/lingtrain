@@ -43,7 +43,7 @@ const themes = ['none', 'default']
 }
 
 .export-settings__title {
-  font-size: 13px;
+  font-size: var(--font-size-body);
   font-weight: 700;
   color: var(--color-text-strong);
 }
@@ -55,7 +55,7 @@ const themes = ['none', 'default']
 }
 
 .export-settings__label {
-  font-size: 11px;
+  font-size: var(--font-size-xs);
   font-weight: 600;
   color: var(--color-text-muted);
   text-transform: uppercase;
@@ -64,7 +64,7 @@ const themes = ['none', 'default']
 
 .export-settings__select {
   padding: 7px var(--spacing-md);
-  font-size: 14px;
+  font-size: var(--font-size-input);
   font-weight: 500;
   color: var(--color-text);
   background: var(--color-bg-surface);

@@ -146,14 +146,14 @@ async function handleDelete(guid: string) {
 }
 
 .upload-panel__title {
-  font-size: 13px;
+  font-size: var(--font-size-subsection-title);
   font-weight: 700;
   color: var(--color-text-strong);
   letter-spacing: 0.5px;
 }
 
 .upload-panel__count {
-  font-size: 11px;
+  font-size: var(--font-size-xs);
   font-weight: 600;
   color: var(--color-text-muted);
   background: var(--color-bg-hover);
@@ -203,7 +203,7 @@ async function handleDelete(guid: string) {
 }
 
 .upload-panel__dropzone-icon {
-  font-size: 20px;
+  font-size: var(--font-size-icon-lg);
   font-weight: 300;
   color: var(--color-text-muted);
   width: 32px;
@@ -216,7 +216,7 @@ async function handleDelete(guid: string) {
 }
 
 .upload-panel__dropzone-text {
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-muted);
 }
 
@@ -225,7 +225,7 @@ async function handleDelete(guid: string) {
   align-items: center;
   justify-content: center;
   gap: var(--spacing-sm);
-  font-size: 13px;
+  font-size: var(--font-size-body);
   color: var(--color-primary);
 }
 
@@ -246,7 +246,7 @@ async function handleDelete(guid: string) {
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   cursor: pointer;
   user-select: none;
@@ -326,7 +326,7 @@ async function handleDelete(guid: string) {
 }
 
 .upload-panel__name {
-  font-size: 13px;
+  font-size: var(--font-size-body);
   color: var(--color-text);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -356,7 +356,7 @@ async function handleDelete(guid: string) {
 }
 
 .upload-panel__empty {
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   text-align: center;
   padding: var(--spacing-md);

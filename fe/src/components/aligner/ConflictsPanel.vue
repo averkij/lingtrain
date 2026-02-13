@@ -67,14 +67,14 @@ async function showDetail(id: number) {
 }
 
 .conflicts-panel__title {
-  font-size: 13px;
+  font-size: var(--font-size-body);
   font-weight: 700;
   color: var(--color-text-strong);
   margin-bottom: var(--spacing-md);
 }
 
 .conflicts-panel__empty {
-  font-size: 13px;
+  font-size: var(--font-size-body);
   color: var(--color-text-muted);
   text-align: center;
   padding: var(--spacing-lg);
@@ -104,13 +104,13 @@ async function showDetail(id: number) {
 }
 
 .conflicts-panel__type {
-  font-size: 13px;
+  font-size: var(--font-size-body);
   font-weight: 500;
   color: var(--color-text);
 }
 
 .conflicts-panel__batch {
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   font-variant-numeric: tabular-nums;
 }
@@ -121,7 +121,7 @@ async function showDetail(id: number) {
 }
 
 .conflicts-panel__detail-header {
-  font-size: 13px;
+  font-size: var(--font-size-body);
   font-weight: 700;
   color: var(--color-text-strong);
   margin-bottom: var(--spacing-sm);
@@ -134,14 +134,14 @@ async function showDetail(id: number) {
 }
 
 .conflicts-panel__detail-side {
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   color: var(--color-text);
   line-height: 1.5;
 }
 
 .conflicts-panel__detail-side strong {
   display: block;
-  font-size: 10px;
+  font-size: var(--font-size-2xs);
   font-weight: 600;
   color: var(--color-text-muted);
   text-transform: uppercase;

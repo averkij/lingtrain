@@ -85,7 +85,7 @@ function canResolve() {
 }
 
 .alignment-controls__title {
-  font-size: 13px;
+  font-size: var(--font-size-subsection-title);
   font-weight: 700;
   color: var(--color-text-strong);
 }
@@ -101,7 +101,7 @@ function canResolve() {
   align-items: center;
   gap: var(--spacing-xs);
   padding: 8px var(--spacing-lg);
-  font-size: 13px;
+  font-size: var(--font-size-body);
   font-weight: 500;
   border-radius: var(--radius);
   cursor: pointer;

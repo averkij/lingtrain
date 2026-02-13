@@ -142,7 +142,7 @@ watch(
 }
 
 .visualization__title {
-  font-size: 13px;
+  font-size: var(--font-size-subsection-title);
   font-weight: 700;
   color: var(--color-text-strong);
 }
@@ -152,7 +152,7 @@ watch(
   align-items: center;
   gap: var(--spacing-xs);
   padding: 5px var(--spacing-md);
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   font-weight: 500;
   color: var(--color-primary);
   background: var(--color-bg-surface);
@@ -181,7 +181,7 @@ watch(
   flex-direction: column;
   align-items: center;
   gap: var(--spacing-sm);
-  font-size: 13px;
+  font-size: var(--font-size-body);
   color: var(--color-text-muted);
   padding: var(--spacing-2xl);
 }
@@ -216,7 +216,7 @@ watch(
 }
 
 .visualization__batch-label {
-  font-size: 11px;
+  font-size: var(--font-size-xs);
   font-weight: 600;
   color: var(--color-text-muted);
   font-variant-numeric: tabular-nums;
@@ -243,7 +243,7 @@ watch(
   align-items: center;
   gap: 3px;
   padding: 5px var(--spacing-md);
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   font-weight: 500;
   color: var(--color-primary);
   background: var(--color-bg-surface);
@@ -265,7 +265,7 @@ watch(
 }
 
 .visualization__info {
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   font-weight: 600;
   color: var(--color-text-muted);
   min-width: 60px;

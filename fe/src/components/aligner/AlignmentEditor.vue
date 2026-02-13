@@ -114,7 +114,7 @@ function handleGoToPage(page: number) {
 }
 
 .alignment-editor__title {
-  font-size: 16px;
+  font-size: var(--font-size-section-title);
   font-weight: 700;
   color: var(--color-text-strong);
   letter-spacing: -0.2px;
@@ -125,7 +125,7 @@ function handleGoToPage(page: number) {
   align-items: center;
   gap: var(--spacing-xs);
   padding: 5px var(--spacing-md);
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   font-weight: 500;
   color: var(--color-primary);
   background: var(--color-bg-surface);

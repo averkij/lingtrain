@@ -97,7 +97,7 @@ watch(
 
 <style scoped>
 .marks-panel__empty {
-  font-size: 13px;
+  font-size: var(--font-size-body);
   color: var(--color-text-muted);
   text-align: center;
   padding: var(--spacing-lg);
@@ -108,7 +108,7 @@ watch(
   align-items: center;
   justify-content: center;
   gap: var(--spacing-sm);
-  font-size: 13px;
+  font-size: var(--font-size-body);
   color: var(--color-text-muted);
   padding: var(--spacing-xl);
 }
@@ -140,7 +140,7 @@ watch(
 }
 
 .marks-panel__side-empty {
-  font-size: 13px;
+  font-size: var(--font-size-body);
   color: var(--color-text-muted);
   text-align: center;
   padding: var(--spacing-lg);
@@ -152,7 +152,7 @@ watch(
   gap: var(--spacing-sm);
   padding: 5px var(--spacing-md);
   border-bottom: 1px solid var(--color-border);
-  font-size: 13px;
+  font-size: var(--font-size-body);
 }
 
 .marks-panel__item:last-child {
@@ -163,7 +163,7 @@ watch(
   flex-shrink: 0;
   min-width: 24px;
   text-align: right;
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   font-weight: 500;
   color: var(--color-text-muted);
   font-variant-numeric: tabular-nums;
@@ -172,7 +172,7 @@ watch(
 .marks-panel__badge {
   flex-shrink: 0;
   padding: 0 6px;
-  font-size: 10px;
+  font-size: var(--font-size-2xs);
   font-weight: 600;
   border-radius: 3px;
   color: #fff;

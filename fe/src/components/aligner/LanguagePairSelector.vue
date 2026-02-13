@@ -52,7 +52,7 @@ const languageCodes = [
 }
 
 .lang-pair-selector__label {
-  font-size: 11px;
+  font-size: var(--font-size-xs);
   font-weight: 600;
   color: var(--color-text-muted);
   text-transform: uppercase;
@@ -61,7 +61,7 @@ const languageCodes = [
 
 .lang-pair-selector__select {
   padding: 7px var(--spacing-md);
-  font-size: 14px;
+  font-size: var(--font-size-input);
   font-weight: 500;
   color: var(--color-text);
   background: var(--color-bg-surface);

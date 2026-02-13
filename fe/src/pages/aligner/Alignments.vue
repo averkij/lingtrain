@@ -119,7 +119,7 @@ async function handleDelete(guid: string) {
 }
 
 h1 {
-  font-size: 22px;
+  font-size: var(--font-size-page-title);
   font-weight: 700;
   color: var(--color-text-strong);
   margin: 0;
@@ -131,7 +131,7 @@ h1 {
   align-items: center;
   gap: var(--spacing-xs);
   padding: 8px var(--spacing-lg);
-  font-size: 13px;
+  font-size: var(--font-size-body);
   font-weight: 600;
   color: #fff;
   background: var(--color-primary);
@@ -151,7 +151,7 @@ h1 {
   align-items: center;
   justify-content: center;
   gap: var(--spacing-sm);
-  font-size: 13px;
+  font-size: var(--font-size-body);
   color: var(--color-text-muted);
   padding: var(--spacing-2xl);
 }
@@ -174,7 +174,7 @@ h1 {
   flex-direction: column;
   align-items: center;
   gap: var(--spacing-md);
-  font-size: 13px;
+  font-size: var(--font-size-body);
   color: var(--color-text-muted);
   text-align: center;
   padding: var(--spacing-2xl);
@@ -218,13 +218,13 @@ h1 {
 }
 
 .aligner-alignments__item-name {
-  font-size: 14px;
+  font-size: var(--font-size-input);
   font-weight: 600;
   color: var(--color-text);
 }
 
 .aligner-alignments__item-langs {
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   font-weight: 500;
 }
@@ -237,7 +237,7 @@ h1 {
 
 .aligner-alignments__state {
   padding: 3px 10px;
-  font-size: 11px;
+  font-size: var(--font-size-xs);
   font-weight: 600;
   border-radius: 20px;
   white-space: nowrap;

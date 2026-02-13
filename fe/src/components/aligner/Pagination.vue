@@ -52,7 +52,7 @@ function next() {
   align-items: center;
   gap: 3px;
   padding: 5px var(--spacing-md);
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   font-weight: 500;
   color: var(--color-primary);
   background: var(--color-bg-surface);
@@ -74,7 +74,7 @@ function next() {
 }
 
 .pagination__info {
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   font-weight: 600;
   color: var(--color-text-muted);
   min-width: 60px;

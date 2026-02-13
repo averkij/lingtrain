@@ -56,7 +56,7 @@ const emit = defineEmits<{
 }
 
 .book-preview__title {
-  font-size: 13px;
+  font-size: var(--font-size-subsection-title);
   font-weight: 700;
   color: var(--color-text-strong);
 }
@@ -66,7 +66,7 @@ const emit = defineEmits<{
   align-items: center;
   gap: var(--spacing-xs);
   padding: 5px var(--spacing-md);
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   font-weight: 500;
   color: var(--color-primary);
   background: var(--color-bg-surface);
@@ -88,7 +88,7 @@ const emit = defineEmits<{
   gap: var(--spacing-sm);
   padding: var(--spacing-2xl) var(--spacing-lg);
   color: var(--color-text-muted);
-  font-size: 13px;
+  font-size: var(--font-size-body);
 }
 
 .book-preview__empty-icon {
@@ -96,7 +96,7 @@ const emit = defineEmits<{
 }
 
 .book-preview__content {
-  font-size: 14px;
+  font-size: var(--font-size-input);
   line-height: 1.7;
   color: var(--color-text);
   max-height: 500px;

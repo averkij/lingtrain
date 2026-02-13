@@ -62,7 +62,7 @@ async function handlePreview() {
 }
 
 h1 {
-  font-size: 22px;
+  font-size: var(--font-size-page-title);
   font-weight: 700;
   color: var(--color-text-strong);
   margin: 0;
@@ -77,7 +77,7 @@ h1 {
 }
 
 .aligner-create__label {
-  font-size: 11px;
+  font-size: var(--font-size-xs);
   font-weight: 600;
   color: var(--color-text-muted);
   text-transform: uppercase;
@@ -86,7 +86,7 @@ h1 {
 
 .aligner-create__select {
   padding: 8px var(--spacing-md);
-  font-size: 14px;
+  font-size: var(--font-size-input);
   font-weight: 500;
   color: var(--color-text);
   background: var(--color-bg-surface);

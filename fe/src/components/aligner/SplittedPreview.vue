@@ -122,7 +122,7 @@ watch(
   gap: var(--spacing-sm);
   padding: var(--spacing-2xl) var(--spacing-lg);
   color: var(--color-text-muted);
-  font-size: 13px;
+  font-size: var(--font-size-body);
 }
 
 .splitted-preview__empty-icon {
@@ -137,7 +137,7 @@ watch(
 }
 
 .splitted-preview__line-count {
-  font-size: 13px;
+  font-size: var(--font-size-body);
   font-weight: 600;
   color: var(--color-text-muted);
 }
@@ -147,7 +147,7 @@ watch(
   align-items: center;
   gap: var(--spacing-xs);
   padding: 5px var(--spacing-md);
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   font-weight: 500;
   color: var(--color-primary);
   background: var(--color-bg-surface);
@@ -167,7 +167,7 @@ watch(
   align-items: center;
   justify-content: center;
   gap: var(--spacing-sm);
-  font-size: 13px;
+  font-size: var(--font-size-body);
   color: var(--color-text-muted);
   padding: var(--spacing-xl);
 }
@@ -187,7 +187,7 @@ watch(
 
 .splitted-preview__lines {
   margin: 0 0 var(--spacing-md);
-  font-size: 13px;
+  font-size: var(--font-size-body);
   line-height: 1.6;
   max-height: 520px;
   overflow-y: auto;
@@ -210,7 +210,7 @@ watch(
   flex-shrink: 0;
   min-width: 32px;
   text-align: right;
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   font-weight: 500;
   color: var(--color-text-muted);
   font-variant-numeric: tabular-nums;
@@ -228,7 +228,7 @@ watch(
   display: inline-block;
   margin-left: var(--spacing-xs);
   padding: 0 6px;
-  font-size: 10px;
+  font-size: var(--font-size-2xs);
   font-weight: 600;
   border-radius: 3px;
   background: var(--color-primary);

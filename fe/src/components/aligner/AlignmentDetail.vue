@@ -197,7 +197,7 @@ async function handleProxyUpload(direction: 'from' | 'to', file: File) {
 }
 
 .alignment-detail__name {
-  font-size: 22px;
+  font-size: var(--font-size-page-title);
   font-weight: 700;
   color: var(--color-text-strong);
   margin: 0;
@@ -206,7 +206,7 @@ async function handleProxyUpload(direction: 'from' | 'to', file: File) {
 
 .alignment-detail__state {
   padding: 3px 10px;
-  font-size: 11px;
+  font-size: var(--font-size-xs);
   font-weight: 600;
   border-radius: 20px;
   white-space: nowrap;
@@ -235,7 +235,7 @@ async function handleProxyUpload(direction: 'from' | 'to', file: File) {
 }
 
 .alignment-detail__langs {
-  font-size: 13px;
+  font-size: var(--font-size-body);
   color: var(--color-text-muted);
   font-weight: 500;
 }
@@ -253,7 +253,7 @@ async function handleProxyUpload(direction: 'from' | 'to', file: File) {
 }
 
 .alignment-detail__progress-label {
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   font-weight: 600;
   color: var(--color-text-muted);
 }
@@ -273,7 +273,7 @@ async function handleProxyUpload(direction: 'from' | 'to', file: File) {
 }
 
 .alignment-detail__progress-text {
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   font-weight: 600;
   color: var(--color-text-muted);
   font-variant-numeric: tabular-nums;
@@ -289,7 +289,7 @@ async function handleProxyUpload(direction: 'from' | 'to', file: File) {
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
-  font-size: 16px;
+  font-size: var(--font-size-section-title);
   font-weight: 700;
   color: var(--color-text-strong);
   margin-top: var(--spacing-md);
@@ -300,7 +300,7 @@ async function handleProxyUpload(direction: 'from' | 'to', file: File) {
 }
 
 .alignment-detail__info {
-  font-size: 13px;
+  font-size: var(--font-size-body);
   color: var(--color-text-muted);
   margin: 0;
   padding: var(--spacing-sm) var(--spacing-md);
@@ -321,7 +321,7 @@ async function handleProxyUpload(direction: 'from' | 'to', file: File) {
   align-items: center;
   justify-content: center;
   gap: var(--spacing-sm);
-  font-size: 13px;
+  font-size: var(--font-size-body);
   color: var(--color-text-muted);
   padding: var(--spacing-2xl);
 }

@@ -139,7 +139,7 @@ async function handleCreate() {
 }
 
 .dialog__title {
-  font-size: 16px;
+  font-size: var(--font-size-section-title);
   font-weight: 700;
   color: var(--color-text-strong);
   letter-spacing: -0.2px;
@@ -169,7 +169,7 @@ async function handleCreate() {
 }
 
 .dialog__label {
-  font-size: 11px;
+  font-size: var(--font-size-xs);
   font-weight: 600;
   color: var(--color-text-muted);
   text-transform: uppercase;
@@ -179,7 +179,7 @@ async function handleCreate() {
 .dialog__input,
 .dialog__select {
   padding: 8px var(--spacing-md);
-  font-size: 14px;
+  font-size: var(--font-size-input);
   font-weight: 500;
   color: var(--color-text);
   background: var(--color-bg-surface);
@@ -204,7 +204,7 @@ async function handleCreate() {
 
 .dialog__btn {
   padding: 8px var(--spacing-lg);
-  font-size: 13px;
+  font-size: var(--font-size-body);
   font-weight: 600;
   border-radius: var(--radius);
   cursor: pointer;

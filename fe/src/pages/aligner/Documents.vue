@@ -139,7 +139,7 @@ async function handleChangedTo() {
 }
 
 h1 {
-  font-size: 22px;
+  font-size: var(--font-size-page-title);
   font-weight: 700;
   color: var(--color-text-strong);
   margin: 0;
@@ -147,7 +147,7 @@ h1 {
 }
 
 .aligner-documents__subtitle {
-  font-size: 13px;
+  font-size: var(--font-size-body);
   color: var(--color-text-muted);
   margin: 0;
 }
@@ -156,7 +156,7 @@ h1 {
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
-  font-size: 16px;
+  font-size: var(--font-size-section-title);
   font-weight: 700;
   color: var(--color-text-strong);
   margin-top: var(--spacing-md);
@@ -167,7 +167,7 @@ h1 {
 }
 
 .aligner-documents__info {
-  font-size: 13px;
+  font-size: var(--font-size-body);
   color: var(--color-text-muted);
   margin: 0;
   padding: var(--spacing-sm) var(--spacing-md);

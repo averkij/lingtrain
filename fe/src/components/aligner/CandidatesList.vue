@@ -70,7 +70,7 @@ const emit = defineEmits<{
 }
 
 .candidates-list__title {
-  font-size: 11px;
+  font-size: var(--font-size-xs);
   font-weight: 700;
   color: var(--color-text-muted);
   text-transform: uppercase;
@@ -90,7 +90,7 @@ const emit = defineEmits<{
 
 .candidates-list__shift-btn {
   padding: 2px;
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   background: var(--color-bg-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
@@ -140,7 +140,7 @@ const emit = defineEmits<{
 }
 
 .candidates-list__id {
-  font-size: 10px;
+  font-size: var(--font-size-2xs);
   color: var(--color-text-muted);
   flex-shrink: 0;
   font-weight: 600;
@@ -148,13 +148,13 @@ const emit = defineEmits<{
 }
 
 .candidates-list__text {
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   color: var(--color-text);
   line-height: 1.4;
 }
 
 .candidates-list__empty {
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   text-align: center;
   padding: var(--spacing-sm);
