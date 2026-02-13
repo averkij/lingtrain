@@ -8,6 +8,7 @@ import ToastNotification from '@/components/ToastNotification.vue'
 </template>
 
 <style>
+@import '@/assets/fonts.css';
 @import '@/assets/variables.css';
 @import '@/assets/forms.css';
 
@@ -21,6 +22,8 @@ import ToastNotification from '@/components/ToastNotification.vue'
 
 body {
   font-family: var(--font-family);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--color-text);
