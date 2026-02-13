@@ -115,9 +115,9 @@ function handleLogout() {
           class="nav-item"
           :class="{ 'nav-item--active': alignerActive }"
         >
-          <svg class="nav-icon" width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M16 2L28.124 9V23L16 30L3.876 23V9L16 2Z" fill="#777" /> <!-- "#dc2626" is red -->
-            <text x="16" y="21" text-anchor="middle" fill="white" font-size="15" font-weight="600" font-family="sans-serif">A</text>
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 6h16M4 12h10M4 18h14" stroke="black" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M19 10l3 3-3 3" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           <span class="nav-label">{{ t('sidebar.aligner') }}</span>
         </RouterLink>
@@ -126,9 +126,9 @@ function handleLogout() {
           class="nav-item"
           :class="{ 'nav-item--active': handbookActive }"
         >
-          <svg class="nav-icon" width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M16 2L28.124 9V23L16 30L3.876 23V9L16 2Z" fill="#777" /> <!-- "#2563eb" is blue -->
-            <text x="16" y="21" text-anchor="middle" fill="white" font-size="15" font-weight="600" font-family="sans-serif">C</text>
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           <span class="nav-label">{{ t('sidebar.handbook') }}</span>
         </RouterLink>
@@ -355,8 +355,8 @@ function handleLogout() {
 
 .nav-label {
   font-size: 13px;
-  font-weight: 500;
-  color: var(--color-text-subtle);
+  font-weight: 400;
+  color: var(--color-text-strong);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
