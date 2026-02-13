@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useEditorStore } from '@/stores/editor'
 import type { ProcessingItem } from '@/api/processing'
@@ -21,9 +21,22 @@ const editTextTo = ref('')
 const showCandidates = ref(false)
 const candidateTextType = ref<'from' | 'to'>('from')
 const candidateShift = ref(0)
-const showSplitDialog = ref(false)
-const splitPosition = ref(0)
-const splitTextType = ref<'from' | 'to'>('from')
+
+const lineIdsFrom = computed(() => {
+  try { return JSON.parse(props.item.line_id_from) as number[] }
+  catch { return [] }
+})
+
+const lineIdsTo = computed(() => {
+  try { return JSON.parse(props.item.line_id_to) as number[] }
+  catch { return [] }
+})
+
+function formatLineIds(ids: number[]) {
+  if (ids.length === 0) return ''
+  if (ids.length === 1) return String(ids[0])
+  return `${ids[0]}–${ids[ids.length - 1]}`
+}
 
 function startEditFrom() {
   editTextFrom.value = props.item.text_from
@@ -37,9 +50,12 @@ function startEditTo() {
 
 async function saveFrom() {
   await editor.editProcessing(props.guid, {
-    index_id: props.item.id,
+    index_id: props.item.index_id,
     text: editTextFrom.value,
     text_type: 'from',
+    operation: 'edit_line',
+    batch_id: props.item.batch_id,
+    batch_index_id: props.item.batch_index_id,
   })
   editingFrom.value = false
   await editor.fetchProcessingPage(props.guid, props.pageSize, editor.currentPage)
@@ -47,9 +63,12 @@ async function saveFrom() {
 
 async function saveTo() {
   await editor.editProcessing(props.guid, {
-    index_id: props.item.id,
+    index_id: props.item.index_id,
     text: editTextTo.value,
     text_type: 'to',
+    operation: 'edit_line',
+    batch_id: props.item.batch_id,
+    batch_index_id: props.item.batch_index_id,
   })
   editingTo.value = false
   await editor.fetchProcessingPage(props.guid, props.pageSize, editor.currentPage)
@@ -58,7 +77,7 @@ async function saveTo() {
 function openCandidates(textType: 'from' | 'to') {
   candidateTextType.value = textType
   candidateShift.value = 0
-  editor.fetchCandidates(props.guid, textType, props.item.id, 3, 3, 0)
+  editor.fetchCandidates(props.guid, textType, props.item.index_id, 3, 3, 0)
   showCandidates.value = true
 }
 
@@ -67,57 +86,28 @@ function handleShift(direction: number) {
   editor.fetchCandidates(
     props.guid,
     candidateTextType.value,
-    props.item.id,
+    props.item.index_id,
     3,
     3,
     candidateShift.value,
   )
 }
-
-function openSplit(textType: 'from' | 'to') {
-  splitTextType.value = textType
-  splitPosition.value = 0
-  showSplitDialog.value = true
-}
-
-async function handleSplit() {
-  await editor.splitSentence(props.guid, {
-    index_id: props.item.id,
-    text_type: splitTextType.value,
-    position: splitPosition.value,
-  })
-  showSplitDialog.value = false
-  await editor.fetchProcessingPage(props.guid, props.pageSize, editor.currentPage)
-}
-
-async function handleToggleExcluded() {
-  const isExcluded = !!(props.item.meta as Record<string, unknown>)?.excluded
-  await editor.toggleExcluded(props.guid, {
-    index_id: props.item.id,
-    text_type: 'from',
-    excluded: !isExcluded,
-  })
-  await editor.fetchProcessingPage(props.guid, props.pageSize, editor.currentPage)
-}
-
-const isExcluded = () => !!(props.item.meta as Record<string, unknown>)?.excluded
 </script>
 
 <template>
-  <div class="edit-item" :class="{ 'edit-item--excluded': isExcluded() }">
-    <div class="edit-item__top">
-      <span class="edit-item__id">#{{ item.id }}</span>
-      <label class="edit-item__excluded-toggle">
-        <input type="checkbox" :checked="isExcluded()" class="edit-item__excluded-input" @change="handleToggleExcluded" />
-        <span class="edit-item__excluded-mark" />
-        {{ t('aligner.excluded') }}
-      </label>
-    </div>
+  <div class="edit-item">
+    <div class="edit-item__row">
+      <div class="edit-item__top">
+        <span class="edit-item__id">{{ item.index_id + 1 }}</span>
+      </div>
 
-    <div class="edit-item__sides">
+      <div class="edit-item__sides">
       <!-- From side -->
       <div class="edit-item__side">
-        <div class="edit-item__side-label">{{ t('aligner.from') }}</div>
+        <div class="edit-item__side-header left">
+          <span class="edit-item__side-label">{{ t('aligner.from') }}</span>
+          <span class="edit-item__line-ids">{{ formatLineIds(lineIdsFrom) }}</span>
+        </div>
         <div v-if="!editingFrom" class="edit-item__text" @dblclick="startEditFrom">
           {{ item.text_from || '&mdash;' }}
         </div>
@@ -140,9 +130,6 @@ const isExcluded = () => !!(props.item.meta as Record<string, unknown>)?.exclude
           <button class="edit-item__tool" @click="openCandidates('from')">
             {{ t('aligner.candidates') }}
           </button>
-          <button class="edit-item__tool" @click="openSplit('from')">
-            {{ t('aligner.split') }}
-          </button>
         </div>
       </div>
 
@@ -150,7 +137,10 @@ const isExcluded = () => !!(props.item.meta as Record<string, unknown>)?.exclude
 
       <!-- To side -->
       <div class="edit-item__side">
-        <div class="edit-item__side-label">{{ t('aligner.to') }}</div>
+        <div class="edit-item__side-header">
+          <span class="edit-item__side-label">{{ t('aligner.to') }}</span>
+          <span class="edit-item__line-ids">{{ formatLineIds(lineIdsTo) }}</span>
+        </div>
         <div v-if="!editingTo" class="edit-item__text" @dblclick="startEditTo">
           {{ item.text_to || '&mdash;' }}
         </div>
@@ -173,11 +163,9 @@ const isExcluded = () => !!(props.item.meta as Record<string, unknown>)?.exclude
           <button class="edit-item__tool" @click="openCandidates('to')">
             {{ t('aligner.candidates') }}
           </button>
-          <button class="edit-item__tool" @click="openSplit('to')">
-            {{ t('aligner.split') }}
-          </button>
         </div>
       </div>
+    </div>
     </div>
 
     <!-- Candidates panel -->
@@ -187,30 +175,6 @@ const isExcluded = () => !!(props.item.meta as Record<string, unknown>)?.exclude
       @close="showCandidates = false"
       @shift="handleShift"
     />
-
-    <!-- Split dialog inline -->
-    <div v-if="showSplitDialog" class="edit-item__split-dialog">
-      <div class="edit-item__split-header">
-        <strong>{{ t('aligner.splitSentence') }}</strong>
-        <button class="edit-item__split-close" @click="showSplitDialog = false">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-            <path d="M3 3l6 6M9 3l-6 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
-          </svg>
-        </button>
-      </div>
-      <div class="edit-item__split-field">
-        <label>{{ t('aligner.splitAt') }}</label>
-        <input v-model.number="splitPosition" type="number" min="0" class="edit-item__split-input" />
-      </div>
-      <div class="edit-item__split-actions">
-        <button class="edit-item__btn" @click="showSplitDialog = false">
-          {{ t('aligner.cancel') }}
-        </button>
-        <button class="edit-item__btn edit-item__btn--save" @click="handleSplit">
-          {{ t('aligner.split') }}
-        </button>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -231,24 +195,28 @@ const isExcluded = () => !!(props.item.meta as Record<string, unknown>)?.exclude
   border-color: var(--color-border-hover);
 }
 
-.edit-item--excluded {
-  opacity: 0.45;
+.edit-item__row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-md);
 }
 
 .edit-item__top {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
 .edit-item__id {
   font-size: 11px;
-  color: var(--color-text-muted);
+  color: var(--color-text-muted-2);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 
 .edit-item__sides {
+  flex: 1;
+  min-width: 0;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   gap: 0;
@@ -267,12 +235,33 @@ const isExcluded = () => !!(props.item.meta as Record<string, unknown>)?.exclude
   min-width: 0;
 }
 
+.edit-item__side-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: 20px;
+}
+
+.edit-item__side-header.left {
+  justify-content: flex-end;
+}
+
 .edit-item__side-label {
   font-size: 10px;
   font-weight: 600;
   color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+.edit-item__line-ids {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-primary);
+  font-variant-numeric: tabular-nums;
+  background: var(--color-primary-subtle, rgba(37, 99, 235, 0.06));
+  padding: 1px 6px;
+  border-radius: 8px;
 }
 
 .edit-item__text {
@@ -371,108 +360,5 @@ const isExcluded = () => !!(props.item.meta as Record<string, unknown>)?.exclude
 
 .edit-item__btn--save:hover {
   background: var(--color-primary-hover);
-}
-
-.edit-item__excluded-toggle {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-  font-size: 11px;
-  color: var(--color-text-muted);
-  cursor: pointer;
-  user-select: none;
-}
-
-.edit-item__excluded-input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.edit-item__excluded-mark {
-  width: 14px;
-  height: 14px;
-  border: 1.5px solid var(--color-border-input);
-  border-radius: 3px;
-  flex-shrink: 0;
-  transition: all var(--transition-fast);
-  position: relative;
-}
-
-.edit-item__excluded-input:checked + .edit-item__excluded-mark {
-  background: var(--color-text-muted);
-  border-color: var(--color-text-muted);
-}
-
-.edit-item__excluded-input:checked + .edit-item__excluded-mark::after {
-  content: '';
-  position: absolute;
-  left: 3px;
-  top: 0px;
-  width: 5px;
-  height: 8px;
-  border: solid #fff;
-  border-width: 0 1.5px 1.5px 0;
-  transform: rotate(45deg);
-}
-
-.edit-item__split-dialog {
-  border-top: 1px solid var(--color-border);
-  padding-top: var(--spacing-sm);
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-}
-
-.edit-item__split-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.edit-item__split-header strong {
-  font-size: 12px;
-  color: var(--color-text-strong);
-}
-
-.edit-item__split-close {
-  background: none;
-  border: none;
-  color: var(--color-text-muted);
-  cursor: pointer;
-  padding: 2px;
-  border-radius: var(--radius);
-  display: flex;
-}
-
-.edit-item__split-close:hover {
-  color: var(--color-text);
-  background: var(--color-bg-hover);
-}
-
-.edit-item__split-field {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  font-size: 12px;
-  color: var(--color-text-muted);
-}
-
-.edit-item__split-input {
-  width: 80px;
-  padding: 3px var(--spacing-sm);
-  font-size: 12px;
-  border: 1px solid var(--color-border-input);
-  border-radius: var(--radius);
-}
-
-.edit-item__split-input:focus {
-  outline: none;
-  border-color: var(--color-primary);
-}
-
-.edit-item__split-actions {
-  display: flex;
-  gap: var(--spacing-xs);
 }
 </style>

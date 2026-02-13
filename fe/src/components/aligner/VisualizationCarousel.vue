@@ -160,7 +160,7 @@ watch(
 }
 
 .visualization__image {
-  max-width: 100%;
+  max-width: 200px;
   border-radius: var(--radius);
   border: 1px solid var(--color-border);
 }

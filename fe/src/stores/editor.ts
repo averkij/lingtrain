@@ -7,14 +7,13 @@ import {
   editProcessing as apiEditProcessing,
   splitSentence as apiSplitSentence,
   getCandidates,
-  toggleExcluded as apiToggleExcluded,
+  switchExcluded as apiSwitchExcluded,
   type ProcessingItem,
   type MetaResponse,
   type IndexEntry,
   type EditParams,
   type SplitSentenceParams,
   type CandidateLine,
-  type ToggleExcludedParams,
 } from '@/api/processing'
 import {
   getConflicts,
@@ -81,7 +80,7 @@ export const useEditorStore = defineStore('editor', () => {
     shift: number,
   ) {
     const res = await getCandidates(guid, textType, indexId, countBefore, countAfter, shift)
-    candidates.value = res.candidates
+    candidates.value = res.items
   }
 
   async function fetchConflicts(guid: string) {
@@ -93,8 +92,8 @@ export const useEditorStore = defineStore('editor', () => {
     conflictDetails.value = await getConflictDetail(guid, id)
   }
 
-  async function toggleExcluded(guid: string, data: ToggleExcludedParams) {
-    await apiToggleExcluded(guid, data)
+  async function switchExcluded(guid: string, lineId: number, textType: string) {
+    await apiSwitchExcluded(guid, lineId, textType)
   }
 
   async function fetchBookPreview(guid: string, data: BookPreviewParams) {
@@ -129,7 +128,7 @@ export const useEditorStore = defineStore('editor', () => {
     fetchCandidates,
     fetchConflicts,
     fetchConflictDetail,
-    toggleExcluded,
+    switchExcluded,
     fetchBookPreview,
     downloadBook,
     downloadProcessing,
